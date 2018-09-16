@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Paracelsos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, width=device-width">
+    
+    <!-- Kendo Mobile - Apache Cordova -->
+    <script src="cordova.js"></script>
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.mobile.min.js"></script>
+    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
+
+    <!-- Plugins -->    
+    <script src="js/plugins/swiper.jquery.min.js"></script>
+    <script src="js/plugins/noty.js"></script>
+    <link href="styles/plugins/noty.css" rel="stylesheet">
+    <script src="js/plugins/pace.js"></script>
+    <link href="styles/plugins/swiper.css" rel="stylesheet">
+    <link href="styles/plugins/pace-theme.css" rel="stylesheet">
+    <script src="js/plugins/sweetalert.min.js"></script>
+    <link href="styles/plugins/sweetalert.css" rel="stylesheet">
+    <script src="js/plugins/jquery-te.js"></script>
+    <script src="js/plugins/test.js"></script>
+    <script src="js/plugins/cleave.min.js"></script>
+    <link href="styles/plugins/jquery-te.css" rel="stylesheet">
+    <link href="styles/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    
+    <link href="styles/main.css" rel="stylesheet">
+
+    <!-- Main Scripts -->
+    <script src="app.js"></script>
+    <script src="js/perfil.js"></script>
+    <script src="js/interes.js"></script>
+    <script src="js/bienvenida.js"></script>
+    <script src="js/paracelsos.js"></script>
+    <script src="js/productos.js"></script>
+    <script src="js/favoritos.js"></script>
+    <script src="js/consultar.js"></script>
+    <script src="js/noticias.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/checkout.js"></script>
+</head>
+
+<body id="kendoUiMobileApp">
+    
+    
+    <!-- Sólo atrás -->
+    <div data-role="layout" data-id="layout-atras">
+        <header data-role="header">
+            <div data-role="navbar">
+                <a data-role="backbutton" data-align="left" ><img class="icon_left" src="images/icon_left.png"></a>
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+    </div>
+    <div data-role="layout" data-id="layout-atras-footer">
+        <header data-role="header">
+            <div data-role="navbar">
+                <a data-role="backbutton" data-align="left" ><img class="icon_left" src="images/icon_left.png"></a>
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+        <footer data-role="footer">
+            <div data-role="tabstrip" id="navigation-container">
+                <a class="border" href="#view-bienvenida" id="bienvenida">
+                    <img src="images/ico_home.png" alt="" class="ico">
+                    <img src="images/ico_home_a.png" alt="" class="hover"> Inicio                    
+                </a>
+                <a class="border" href="#view-noticias" data-icon="contacts" id="noticias">
+                    <i class="fa fa-newspaper-o ico" aria-hidden="true"></i>
+                    <i class="fa fa-newspaper-o hover" aria-hidden="true"></i> Noticias                    
+                </a>
+                <a class="border" href="#view-consultar" id="paracelsos">
+                    <i class="fa fa-paper-plane ico" aria-hidden="true"></i>
+                    <i class="fa fa-paper-plane hover" aria-hidden="true"></i> Preguntar             
+                </a>
+                <!-- <a class="border" href="#view-de-interes" data-icon="settings" id="tuInteres">
+                    <img src="images/ico_de_interes.png" alt="" class="ico">
+                    <img src="images/ico_de_interes_a.png" alt="" class="hover"> Interés                    
+                </a> -->
+                <a class="border" href="#view-productos" data-icon="contacts" id="Productos">
+                    <img src="images/ico_productos.png" alt="" class="ico">
+                    <img src="images/ico_productos_a.png" alt="" class="hover"> Catálogo                    
+                </a>
+                <a class="border" href="#view-carrito" data-icon="contacts" id="Carrito">
+                    <img src="images/ico_shop_off.png" alt="" class="ico">
+                    <img src="images/ico_shop_on.png" alt="" class="hover"> Carrito                    
+                </a>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Layout Header - footer -->
+    <div data-role="layout" data-id="main">
+        <header data-role="header">
+            <div data-role="navbar">
+                <a data-role="button" onclick="app.perfilService.viewModel.validar()" data-align="right" class="menu-top"><i class="fa fa-user-circle" aria-hidden="true"></i></a>               
+                <a data-role="button" data-rel="drawer" href="#menuApp" data-align="right" class="menu-top"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+        <footer data-role="footer">
+            <div data-role="tabstrip" id="navigation-container">
+                <a class="border" href="#view-bienvenida" id="bienvenida">
+                    <img src="images/ico_home.png" alt="" class="ico">
+                    <img src="images/ico_home_a.png" alt="" class="hover"> Inicio                    
+                </a>
+                <a class="border" href="#view-noticias" data-icon="contacts" id="noticias">
+                    <i class="fa fa-newspaper-o ico" aria-hidden="true"></i>
+                    <i class="fa fa-newspaper-o hover" aria-hidden="true"></i> Noticias                    
+                </a>
+                <a class="border" href="#view-consultar" id="consultar">
+                    <i class="fa fa-paper-plane ico" aria-hidden="true"></i>
+                    <i class="fa fa-paper-plane hover" aria-hidden="true"></i> Preguntar             
+                </a>
+                <!-- <a class="border" href="#view-de-interes" data-icon="settings" id="tuInteres">
+                    <img src="images/ico_de_interes.png" alt="" class="ico">
+                    <img src="images/ico_de_interes_a.png" alt="" class="hover"> Interés                    
+                </a> -->
+                <a class="border" href="#view-productos" data-icon="contacts" id="Productos">
+                    <img src="images/ico_productos.png" alt="" class="ico">
+                    <img src="images/ico_productos_a.png" alt="" class="hover"> Catálogo                    
+                </a>
+                <a class="border" href="#view-carrito" data-icon="contacts" id="Carrito">
+                    <img src="images/ico_shop_off.png" alt="" class="ico">
+                    <img src="images/ico_shop_on.png" alt="" class="hover"> Carrito                    
+                </a>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Layout Header -->
+    <div data-role="layout" data-id="main-nonav">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+        <footer data-role="footer">
+        </footer>
+    </div>
+    
+    <!-- Drawer --> 
+     <div id="menuApp" data-role="drawer" data-title="" data-position="right" 
+        data-swipe-to-open-views='["view-bienvenida","view-noticias","view-consultar","view-de-interes","view-productos"]' data-show="app.bienvenidaService.viewModel.mostrarDrawer">
+        <header data-role="header">
+            <div data-role="navbar">                
+                <img src="images/logo_horizontal_b.png" alt="">
+                <span data-align="right" data-role="view-title"></span>
+            </div>
+        </header>
+        <ul id="navigation-container" data-role="listview">
+            <li><a href="#view-bienvenida">Inicio<img src="images/icon_right.png"></a></li>
+            <li><a class="mlogin" href="#view-preguntas">Preguntas<img src="images/icon_right.png"></a></li>
+            <li><a onclick="app.perfilService.viewModel.validarFavoritosNoticias()">Favoritos - Noticias<img src="images/icon_right.png"></a></li>
+            <!-- <li><a class="mlogin" onclick="app.perfilService.viewModel.validarFavoritos()">Favoritos - Temas Interés<img src="images/icon_right.png"></a></li> -->
+            <li><a id="link_tc" href="#view-ver-tc">Ver tarjetas de crédito<img src="images/icon_right.png"></a></li>
+
+
+        </ul>
+        <footer data-role="footer">
+            <ul id="navigation-container" data-role="listview">
+                <!--<li><a class="madmin" href="#view-responder-admin">Responder<img src="images/icon_right.png"></a></li>-->
+                <li><a href="#view-autoria">Autoría<img src="images/icon_right.png"></a></li>
+                <li><a href="#view-terminos">Términos y condiciones<img src="images/icon_right.png"></a></li>
+                <li><a href="#view-politicas">Políticas<img src="images/icon_right.png"></a></li>
+                <!--<li><a href="#view-contact">Contacto<img src="images/icon_right.png"></a></li>-->
+                <li><a class="" onclick="click:app.perfilService.viewModel.cerrarSesion()">Cerrar sesión<img src="images/icon_right.png"></a></li>
+            </ul>
+            <a onclick="cordova.InAppBrowser.open('http://emerald.studio','_system')">By <img src="images/ico_emerald2.png"/></a>
+        </footer>
+    </div>
+    
+    
+    <!-- View Bienvenida -->
+    <div id="view-bienvenida"
+        data-layout="main"
+        data-role="view"
+        data-title="Paracelsos"
+        data-model="app.bienvenidaService.viewModel" data-show="app.bienvenidaService.viewModel.mostrar">
+        <div class="swiper-home">
+            <div class="swiper-wrapper" id="sliderHome">
+            </div>
+        </div>
+        <h3>Noticias</h3>
+        <div id="noticiaDia"></div>
+        <div id="noticiasDia"></div>
+
+    </div>
+    
+    <!-- View noticias -->
+    <div id="view-noticias"
+        data-layout="main"
+        data-role="view"
+        data-title="Noticias"
+        data-model="app.noticiasService.viewModel" 
+        data-show="app.noticiasService.viewModel.mostrar">  
+        <div id="noticiaDiaInt"></div>
+        <div id="noticiasContenedor"></div>
+    </div>
+    
+    <!-- View noticias detalle -->
+    <div id="view-noticias-detalle"
+        data-role="view"
+        data-title="Noticias"
+        data-model="app.noticiasService.viewModel" 
+        data-show="app.noticiasService.viewModel.mostrarDetalle" 
+        data-hide="app.noticiasService.viewModel.hideDetalle"> 
+        
+        <header data-role="header">
+            <div data-role="navbar">
+                <a data-role="backbutton" data-align="left" ><img class="icon_left" src="images/icon_left.png"></a>
+                <a data-align="right" id="favArticulo" onclick="app.noticiasService.viewModel.favorito()"></a>
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+        <footer data-role="footer">
+            <div data-role="tabstrip" id="navigation-container">
+                <a class="border" href="#view-bienvenida" id="bienvenida">
+                    <img src="images/ico_home.png" alt="" class="ico">
+                    <img src="images/ico_home_a.png" alt="" class="hover"> Inicio                    
+                </a>
+                <a class="border" href="#view-noticias" data-icon="contacts" id="noticias">
+                    <i class="fa fa-newspaper-o ico" aria-hidden="true"></i>
+                    <i class="fa fa-newspaper-o hover" aria-hidden="true"></i> Noticias                    
+                </a>
+                <a class="border" href="#view-consultar" id="paracelsos">
+                    <i class="fa fa-paper-plane ico" aria-hidden="true"></i>
+                    <i class="fa fa-paper-plane hover" aria-hidden="true"></i> Preguntar             
+                </a>
+                <!-- <a class="border" href="#view-de-interes" data-icon="settings" id="tuInteres">
+                    <img src="images/ico_de_interes.png" alt="" class="ico">
+                    <img src="images/ico_de_interes_a.png" alt="" class="hover"> Interés                    
+                </a> -->
+                <a class="border" href="#view-productos" data-icon="contacts" id="Productos">
+                    <img src="images/ico_productos.png" alt="" class="ico">
+                    <img src="images/ico_productos_a.png" alt="" class="hover"> Catálogo                    
+                </a>
+            </div>
+        </footer>
+        
+        <div id="noticia">
+            <div class="i_interna">
+                <img class="i_detalle" />
+                <p class="titulo"></p>
+                <p class="fecha"></p>
+            </div>
+            <div class="continfo">              
+            </div>
+        </div>
+    </div>  
+        
+    <!-- View consultar -->
+    <div id="view-consultar"
+        data-layout="main"
+        data-role="view"
+        data-title="Preguntas"
+        data-model="app.consultasService.viewModel" 
+        data-show="app.consultasService.viewModel.mostrar">   
+        <div id="contenedorConsulta"></div> 
+        <div id="contenedorConsultaLogin">
+            <h3>Sección preguntas</h3>
+            <div class="pregunta">
+                <input onkeydown="app.consultasService.viewModel.cuenta()" type="text" id="pregunta" placeholder="Escribe la pregunta (máximo 200 caracteres)" maxlength="200">
+    			<span id="caracteres"></span>
+    			<a onclick="app.consultasService.viewModel.enviarPregunta()"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>	
+            </div>
+            <br>
+    		<div class="preguntas">					
+    			<h3>Su conocimiento en salud</h3>
+                <p class="historico"><a href="#view-preguntas">Histórico de preguntas</a></p>
+                <div id="historicoReducido"></div>
+            </div>
+        </div>
+    </div>
+    <!-- View preguntas -->
+    <div id="view-preguntas"
+        data-layout="main"
+        data-role="view"
+        data-title="Preguntas"
+        data-model="app.consultasService.viewModel" 
+        data-show="app.consultasService.viewModel.mostrarPreguntas">   
+		<div class="preguntas">					
+			<h3>Su conocimiento en salud</h3>
+            
+            <div id="historico"></div>
+        </div>
+    </div>
+    <script type="text/x-kendo-template" id="template-preg_conocimiento">
+        <div id="historico"><p class="fecha">#: fecha #</p></div>
+        <div id="historico"><p class="pregunta_u">#: pregunta #- <span><a href="\#view-preguntas-detalle?id=${id}">Ver</a></span></p></div>
+     </script>
+    <!-- view preguntas detalle -->
+    <div id="view-preguntas-detalle"
+        data-layout="layout-atras-footer"
+        data-role="view"
+        data-title="Consultas"
+        data-model="app.consultasService.viewModel" 
+        data-show="app.consultasService.viewModel.mostrarDetalle">   
+		<div class="preguntad"></div>
+        <div class="respuestasd"></div>      
+        <div id="pregunta_adicional">
+            <h3>Pregunta adicional</h3>
+            <input onkeydown="app.consultasService.viewModel.cuentaD()" type="text" id="preguntad" placeholder="Escribe la pregunta (máximo 200 caracteres)" maxlength="200">
+			<span id="caracteresd"></span>
+			<a onclick="app.consultasService.viewModel.enviarPreguntaD()"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>	
+        </div>
+    </div>
+    
+    
+    <!-- View De tu interes -->
+    <div data-role="view"
+        id="view-de-interes"
+        data-layout="main"
+        data-title="De su interés"
+        data-model="app.interesService.viewModel"
+        data-show="app.interesService.viewModel.mostrar"
+        data-hide="app.interesService.viewModel.ocultar">
+        <div id="contTextos"></div>
+         <!-- Swiper -->
+        <div class="swiper-container gallery-thumbs" id="categoriasArticulos">
+        </div>
+        <div class="swiper-container gallery-top" id="articulos"></div>
+    </div>
+     <!-- View Detalle de tu interes -->
+    <div data-role="view"
+        id="view-detalle-categorias"
+        data-title="De su interés"
+        data-model="app.interesService.viewModel"
+        data-show="app.interesService.viewModel.mostrarArticulos">
+        <header data-role="header">
+            <div data-role="navbar">
+                <a data-role="backbutton" data-align="left" ><img class="icon_left" src="images/icon_left.png"></a>
+                <span data-role="view-title"></span>
+                <a data-align="right" id="favTema" onclick="app.interesService.viewModel.favorito()"></a>
+             </div>
+        </header>
+        <div id="introArticulo"></div>
+        <div id="contenidoArticulo"></div>
+    </div>
+    
+    
+    <!-- View Productos -->
+    <div data-role="view"
+        id="view-productos"
+        data-layout="main"
+        data-title="Productos"
+        data-model="app.productosService.viewModel"
+        data-hide="app.productosService.viewModel.ocultar"
+        data-show="app.productosService.viewModel.mostrar">
+        <p>A través de esta sección proximamente podrá ver el catálogo de productos que tenemos para mejorar su salud y todo con el respaldo y asesoría de Paracelsos</p> 
+        <div class="swiper-container gallery-thumbsP" id="categoriaPorductos"></div>
+        <div class="swiper-container gallery-topP" id="contenidoSlider"></div>
+    </div>
+    
+    <!-- View Detalle Productos -->
+    <div data-role="view"
+        id="view-detalle-producto"
+        data-layout="layout-atras-footer"
+        data-title="Catálogo"
+        data-model="app.productosService.viewModel"
+        data-show="app.productosService.viewModel.mostrarDetalle">
+        <div class="portadaProducto"></div>
+        <div class="titlePortada"></div>
+        <h3 class="cleanButton">Seleccione la cantidad</h3>
+        <div class="plusProduct margen"></div>
+        <div class="margen cleanButton">
+            <div class="row-fluid">
+                <div class="span6 row-fluid">
+                    <input type='button' value='-' class='disminuir' field='quantity' onclick="app.productosService.viewModel.disminuir()" />
+                    <input id="cantidad" type='text' name='cantidad'  readonly="readonly" />
+                    <input type='button' value='+' class='aumentar' field='quantity' onclick="app.productosService.viewModel.aumentar()" />
+                </div>
+                <div class="span6"> 
+                    <div class="add" onclick="app.productosService.viewModel.agregarCarrito()">Agregar al carrito
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="cantidad" id="cantidadP" value="0">
+        <input type="hidden" name="precio" id="precio" value="0">
+        <div class="textPortada"></div>
+        <a href="#" target="_blank" class="conferenceB">Ver conferencia</a>
+        <!-- <div class="video"></div> -->
+        <!-- <div id="accionesDetalle"></div> -->
+    </div>  
+    
+    <!-- View carrito -->
+    <div data-role="view"
+        id="view-carrito"
+        data-layout="main"
+        data-title="Carrito"
+        data-model="app.carritoService.viewModel"
+        data-show="app.carritoService.viewModel.mostrarProducto">
+        
+        <div id="productos_carrito">
+        </div>
+        <div align="center" class="span12 cont_btnCar">
+            <div class="span12 pt">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <p>Total</p>
+                    </div>
+                    <div class="total totalCar span6">
+                        <input class="cValor" id="totalT" type="text" readonly>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <p class="btn_rc" id="btn_carrito" align="center">
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    
+    <!-- View checkout -->
+    <div data-role="view"
+        id="view-checkout"
+        data-layout="main"
+        data-title="checkout"
+        data-model="app.checkoutService.viewModel"
+        data-show="app.checkoutService.viewModel.carrito">
+        
+        <div id="formProductos" class="registroForm">
+            <h3>Detalles de facturación</h3>
+            <form id="formRegistroCheck" data-bind="events: { submit: enviarSolicitud }">
+               <p><input class="inputRegistro" id="inputNombreProducto" type="text" placeholder="Nombre"></p>
+               <p><input class="inputRegistro" id="inputApellido" type="text" placeholder="Apellido"></p>
+               <p><input class="inputRegistro" type="number" name="fecha" placeholder="C.C" id="inputCedula"></p>
+               <p><input class="inputRegistro" id="inputCorreoProducto" type="email" placeholder="Electrónico"></p>
+               <p><input class="inputRegistro" id="inputDireccion" type="text" placeholder="Dirección"></p>
+               <p><input class="inputRegistro" id="inputTelefonoProducto" type="number" placeholder="Teléfono"></p>
+               <p><input class="inputRegistro" id="inputDireccionEnvio" type="text" placeholder="Dirección de envío (Apt, Ofc, etc)"></p>
+               <p><input class="inputRegistro" id="inputPaisCheck" type="text" placeholder="País"></p>
+               <p><input class="inputRegistro" id="inputCiudadCheck" type="text" placeholder="Ciudad"></p>
+               <div id="productos_b">
+                    
+               </div>
+                <div align="center" class="span12 pt">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <p>Sub Total</p>
+                        </div>
+                        <div class="total span6">
+                            <input class="cValor" id="totalCh" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <p>Envío</p>
+                        </div>
+                        <div class="total span6">
+                            <input class="cValor" id="envio" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <p>Total</p>
+                        </div>
+                        <div class="total span6">
+                            <input class="cValor" id="granTotal" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <p class="btn_rc" align="center">
+                                <button type="submit" class="readmore">Finalizar compra</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> 
+
+
+    
+    <!-- View Agregar TC -->
+    <div id="view-agregar-tc" 
+        data-role="view"
+        data-model="app.checkoutService.viewModel"
+        data-show="app.checkoutService.viewModel.mostrarAgregarTC"
+        data-layout="main"
+        data-title="Agregar TC">
+        <div align="center" class="tituloVista"><h3>Agregar TC</h3></div>
+        
+        <div class="tc-container">
+            <div class="card-wrapper"></div>
+
+            <div class="form-container active">
+                <form action="">
+                    <input placeholder="Número de tarjeta" type="tel" name="number" id="numeroTC">
+                    <input placeholder="Nombre en tarjeta" type="text" name="name" id="nombreTC">
+                    <input placeholder="MM/AAAA" type="tel" name="expiry" id="expTC">
+                    <input placeholder="CVC" type="tel" name="cvc" id="cvcTC">
+                </form>
+            </div>
+        </div>
+        <footer data-role="footer">
+            <a class="boton-principal" data-role="button" data-bind="click:agregarTC">Agregar</a>
+        </footer>
+        
+    </div>  
+    <!-- View Ver TC -->
+    <div id="view-ver-tc" 
+        data-role="view"
+        data-model="app.checkoutService.viewModel"
+        data-show="app.checkoutService.viewModel.verTC"
+        data-layout="main"
+        data-title="Tarjetas">
+        <div class="tituloVista"><h3>Tarjetas de crédito</h3></div>
+        
+        <div id="contSelectTC"></div>
+        <br>
+        <footer data-role="footer">
+            <a data-role="button" data-bind="click: borrarTC" data-icon="delete" id="boton-borrar-tc"></a>
+            <a href="#view-agregar-tc?compra=0" data-role="button" data-icon="add" id="boton-agregar-tc"></a>
+        </footer>
+    </div>      
+    
+    <!-- View Registro - Login -->    
+    <div id="view-no-login" 
+        data-role="splitview"
+        data-title="Iniciar"
+        data-use-native-scrolling="true"
+        data-model= "app.perfilService.viewModel"
+        data-show= "app.perfilService.viewModel.perfil">    
+        
+        <header data-role="header">
+            <div data-role="navbar">
+                <!--<a data-role="button" onclick="app.perfilService.viewModel.validar()" data-align="right" class="menu-top"><i class="fa fa-user-circle" aria-hidden="true"></i></a>-->
+                <a data-role="button" data-rel="drawer" href="#menuApp" data-align="right" class="menu-top"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+        <footer data-role="footer">
+            <div data-role="tabstrip" id="navigation-container">
+                <a class="border" href="#view-bienvenida" id="bienvenida">
+                    <img src="images/ico_home.png" alt="" class="ico">
+                    <img src="images/ico_home_a.png" alt="" class="hover"> Inicio                    
+                </a>
+                <a class="border" href="#view-noticias" data-icon="contacts" id="noticias">
+                    <i class="fa fa-newspaper-o ico" aria-hidden="true"></i>
+                    <i class="fa fa-newspaper-o hover" aria-hidden="true"></i> Noticias                    
+                </a>
+                <a class="border" href="#view-consultar" id="consultar">
+                    <i class="fa fa-paper-plane ico" aria-hidden="true"></i>
+                    <i class="fa fa-paper-plane hover" aria-hidden="true"></i> Preguntar             
+                </a>
+                <a class="border" href="#view-de-interes" data-icon="settings" id="tuInteres">
+                    <img src="images/ico_de_interes.png" alt="" class="ico">
+                    <img src="images/ico_de_interes_a.png" alt="" class="hover"> Interés                    
+                </a>
+                <a class="border" href="#view-productos" data-icon="contacts" id="Productos">
+                    <img src="images/ico_productos.png" alt="" class="ico">
+                    <img src="images/ico_productos_a.png" alt="" class="hover"> Catálogo                    
+                </a>
+            </div>
+        </footer>
+        
+        <div id="perfil-pane" data-role="pane" data-navigate="onNavigate" data-transition="fade" data-loading="Cargando">
+            <div data-role="view" id="view-login" data-show="showLoading"
+                data-model= "app.perfilService.viewModel"
+                data-use-native-scrolling="true">   
+                <div class="tabscontacto">             
+                    <a class="km-state-active" data-role="button" data-align="left">Inicio sesión</a>
+                    <a data-role="button" data-click="app.perfilService.viewModel.viewRegistro" data-align="left">Registrarse</a>               
+               </div>             
+               
+               <div id="loginForm">
+                    <form id="formLogin" data-bind="events: { submit: validarLogin }">
+                       <p><img src="images/logo_vertical.png" alt="Paracelsos"></p>
+                       <p><input class="input_user inputLogin" id="inputUser" type="email" placeholder="Correo"></p>
+                       <p><input class="input_pass inputLogin" id="inputPass" type="password" placeholder="Contraseña"></p>
+                       <p><button type="submit" >Iniciar</button></p>
+                     </form>
+                       <p><a href="#view-remember">¿Olvidó su contraseña?</a></p>
+               </div>
+            </div>
+            
+            <div data-role="view" id="view-registro" data-show="showLoading"
+                data-model= "app.perfilService.viewModel"
+                data-use-native-scrolling="true">  
+                <div class="tabscontacto">                
+                    <a data-role="button" data-click="app.perfilService.viewModel.viewLogin" data-align="left">Inicio sesión</a>
+                    <a class="km-state-active" data-role="button" data-align="left">Registrarse</a>               
+               </div>
+                
+               <div id="registroForm">
+                 <form id="formRegistro" data-bind="events: { submit: validarRegistro }">
+                   <p><img src="images/logo_vertical.png" alt="Paracelsos"></p>
+                   <p>Una vez registrado tendrá respuesta con la mejor evidencia clínica disponible en un lenguaje sencillo y claro a preguntas asociadas al cuidado de su salud. </p>
+                   <p><input class="inputRegistro" id="inputNombres" type="text" placeholder="Nombre"></p>
+                   <p><input class="inputRegistro" id="inputApellidos" type="text" placeholder="Apellidos"></p>
+                   <p>Fecha de nacimiento:<br><br><input class="inputRegistro" type="date" name="fecha" placeholder="Fecha de nacimiento" id="fechaNacimiento"></p>
+                   <p><input class="inputRegistro" id="inputCorreo" type="email" placeholder="Correo"></p>
+                   <p><input class="inputRegistro" id="inputCiudad" type="text" placeholder="Ciudad"></p>
+                   <p><input class="inputRegistro" id="inputPais" type="text" placeholder="País"></p>
+                   <p><input class="inputRegistro" id="inputProfesion" type="text" placeholder="Profesión"></p>
+                   <p><input class="inputRegistro" id="inputContrasena" type="password" placeholder="Contraseña"></p>
+                   <p><input class="inputRegistro" id="inputConfirmar" type="password" placeholder="Confirmar contraseña"></p>
+                   <p><button type="submit">Registrar</button></p>
+                  </form>
+               </div>
+            </div>
+        </div>        
+    </div>        
+    
+    <!-- View Remember -->
+    <div id="view-remember" 
+        data-role="view"
+        data-model="app.perfilService.viewModel"
+        data-show="app.perfilService.viewModel.mostrarRecordar"
+        data-layout="layout-atras"
+        data-title="Recuperar contraseña">
+        <div class="centrado">
+            <p>Para reestablecer su contraseña debe indicar su correo electrónico con el cuál se registró</p>
+            <form id="inicioSesion"> 
+               	 <input class="input input_usuario" type="email" id="emailRemember" placeholder="Correo electrónico" />
+                <input type="submit" value="Enviar" data-bind="visible: false">
+            </form>
+            <a href="#view-reset" class="linkOlvidar">Ya cuento con el <br>código de recuperación</a>
+        </div>
+        <footer data-role="footer">
+            <div data-role="button" class="boton-principal" data-bind="click: remember">Recordar</div>
+        </footer>
+    </div>
+     
+    <!-- View Reset Password -->
+     <div id="view-reset" 
+        data-role="view"
+        data-model="app.perfilService.viewModel"
+        data-show="app.perfilService.viewModel.mostrarReset"
+        data-layout="layout-atras"
+        data-title="Restablecer contraseña">
+        <div class="centrado">
+            <p>Para restaurar su contraseña debe ingresar su código de seguridad enviado a su cuenta de correo electrónico</p>
+            <form id="inicioSesion">
+			    <input class="input input_password" type="tel" id="codeReset" placeholder="Código de seguridad" />
+			    <input class="input input_password" type="password" id="newPassword" placeholder="Nueva contraseña" />
+			    <input class="input input_password" type="password" id="newPassword2" placeholder="Repetir Contraseña" />
+                <input type="submit" value="Enviar" data-bind="visible: false">
+            </form>
+        </div>
+        <footer data-role="footer">
+            <div data-role="button" class="boton-principal" data-bind="click: restablish">Reestablecer</div>
+        </footer>
+        
+    </div>
+       
+    <!-- View Editar Perfil -->
+    <div id="view-editar-perfil"
+        data-layout="layout-atras"
+        data-role="view"
+        data-title="Perfil"
+        data-use-native-scrolling="true"
+        data-model="app.perfilService.viewModel"
+        data-show="app.perfilService.viewModel.mostrarInfoPrincipal">   
+        
+        <div id="editarPerfil">
+           <img id="fotoPerfil" class="datosFoto" src="images/icon_no.png"> 
+            <a id="editarFoto" class="cambiarFoto">
+                <p> Subir foto </p>
+            </a> 
+        </div>        
+        
+       <div id="editarForm">
+           <p><input id="inputNombreEditar" type="text" placeholder="Nombre" class="edit"></p>
+           <p><input id="inputCorreoEditar" type="email" placeholder="Correo" class="no-edit" readonly></p>
+           <p><input id="inputCiudadEditar" type="text" placeholder="Ciudad" class="edit"></p>
+           <p><input id="inputPaisEditar" type="text" placeholder="País" class="edit"></p>
+           <p><input id="inputProfesionEditar" type="text" placeholder="Profesión" class="edit"></p>
+           <p><button data-bind="click:guardarPerfil">Guardar</button></p>
+       </div>
+    </div> 
+    
+    <!-- View Favoritos -->
+    <div data-role="view"
+        id="view-favoritos"
+        data-layout="layout-atras"
+        data-title="Favoritos - Interés"
+        data-model="app.favoritosService.viewModel"
+        data-show="app.favoritosService.viewModel.mostrarFavoritos">
+        
+        <div id="listaFavoritos"></div>
+    </div>
+    
+    <!-- View Favoritos N -->
+    <div data-role="view"
+        id="view-favoritos-noticias"
+        data-layout="layout-atras"
+        data-title="Favoritos - Noticias"
+        data-model="app.favoritosService.viewModel"
+        data-show="app.favoritosService.viewModel.mostrarFavoritosN">
+        
+        <div id="listaFavoritosN"></div>
+    </div>
+    
+    <!-- View autoria -->
+    <div data-role="view"
+        id="view-autoria"
+        data-layout="main"
+        data-title="Autoria"
+        data-show="app.paracelsosService.viewModel.mostrarAutoria">
+        
+        <div id="autoria"></div>
+    </div>
+    <!-- View terminos -->
+    <div data-role="view"
+        id="view-terminos"
+        data-layout="main"
+        data-title="Términos"
+        data-show="app.paracelsosService.viewModel.mostrarTerminos">
+        
+        <div id="terminos"></div>
+    </div>
+    <!-- View politicas -->
+    <div data-role="view"
+        id="view-politicas"
+        data-layout="main"
+        data-title="Políticas"
+        data-show="app.paracelsosService.viewModel.mostrarPoliticas">
+        
+        <div id="politicas"></div>
+    </div>
+    
+    <!-- View admin 
+    <div data-role="view"
+        id="view-responder-admin"
+        data-layout="main"
+        data-title="Responder"
+        data-model="app.paracelsosService.viewModel"
+        data-show="app.paracelsosService.viewModel.responderAdmin">
+              
+        <div id="responder_admin">
+            <textarea placeholder="Respuesta"></textarea>
+			<a class="btn_enviar" onclick="app.paracelsosService.viewModel.enviarRespuesta()"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>	
+        </div>
+    </div>-->
+    
+    
+    <!-- View Paracelsos 
+    <div data-role="splitview"
+        id="view-paracelsos"
+        data-title="Paracelsos"
+        data-show="app.paracelsosService.viewModel.mostrar"
+        data-use-native-scrolling="true"> 
+         <header data-role="header">
+            <div data-role="navbar">
+                <a data-role="button" href="#view-bienvenida" data-align="left" class="menu-top"><img src="images/ico_home.png" alt=""></a>
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+        
+        <div id="paracelsos-pane" data-role="pane" data-navigate="onNavigate" data-transition="fade" data-loading="Cargando">
+            <div data-role="view" id="view-acerca-paracelsos">   
+               <div class="tabscontacto">             
+                    <a class="km-state-active" data-role="button" data-align="left">Acerca de</a>
+                    <a data-role="button" data-click="app.paracelsosService.viewModel.viewPatrocinadores" data-align="left">Patrocinadores</a>  
+                    <a data-role="button" data-click="app.paracelsosService.viewModel.viewTerminos" data-align="left">Términos</a>
+               </div>           
+               <div class="contParacelsos">
+                   <img src="images/logo_vertical.png" alt="Paracelsos">
+                   <div class="textNosotros"></div>
+                </div>
+                       
+            </div>
+            
+            <div data-role="view" id="view-patrocinadores">  
+                <div class="tabscontacto">             
+                    <a data-role="button" data-click="app.paracelsosService.viewModel.viewParacelsos" data-align="left">Acerca de</a>
+                    <a class="km-state-active" data-role="button" data-align="left">Patrocinadores</a>  
+                    <a data-role="button" data-click="app.paracelsosService.viewModel.viewTerminos" data-align="left">Términos</a>
+               </div>           
+               <div class="contParacelsos">  
+                   <ul class="contPatrocinadores"></ul>
+              </div>
+             
+            </div>
+            
+            <script type="text/x-kendo-template" id="template-patrocinadores">
+                <div id="patrocinadores">
+                    <img class="logoPatrocinador" src="${logo}"> 
+                    <p class="patrocinador">${patrocinador}</p>
+                </div>
+            </script>
+            
+            <div data-role="view" id="view-terminos">
+               <div class="tabscontacto">             
+                    <a data-role="button" data-click="app.paracelsosService.viewModel.viewParacelsos" data-align="left">Acerca de</a>
+                    <a data-role="button" data-click="app.paracelsosService.viewModel.viewPatrocinadores" data-align="left">Patrocinadores</a>  
+                    <a class="km-state-active" data-role="button" data-align="left">Términos</a>
+               </div>           
+               <div class="contParacelsos">
+                   <div class="textoTerminos"></div>
+                </div>          
+            </div>
+        </div>        
+        
+        <footer data-role="footer">
+            <div data-role="tabstrip" id="navigation-container">
+                <a class="border" href="#view-bienvenida" id="bienvenida">
+                    <img src="images/ico_home.png" alt="" class="ico">
+                    <img src="images/ico_home_a.png" alt="" class="hover"> Inicio                    
+                </a>
+                <a href="#view-paracelsos" >
+                    <img src="images/ico_paracelsos.png" alt="" class="ico">
+                    <img src="images/ico_paracelsos_a.png" alt="" class="hover"> Paracelsos                    
+                </a>
+                <a href="#view-de-interes" data-icon="settings">
+                    <img src="images/ico_de_interes.png" alt="" class="ico">
+                    <img src="images/ico_de_interes_a.png" alt="" class="hover"> De tu interés                    
+                </a>
+                <a href="#view-productos" data-icon="contacts">
+                    <img src="images/ico_productos.png" alt="" class="ico">
+                    <img src="images/ico_productos_a.png" alt="" class="hover"> Productos                    
+                </a>
+                <a onclick="app.perfilService.viewModel.validar()" data-icon="contacts">
+                    <img src="images/ico_perfil.png" alt="" class="ico">
+                    <img src="images/ico_perfil_a.png" alt="" class="hover"> Perfil                    
+                </a>
+            </div>
+        </footer>
+    </div>-->
+    
+</body>
+
+</html>

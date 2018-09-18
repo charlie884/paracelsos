@@ -8,8 +8,10 @@
             var password = window.localStorage.getItem('passwordUsuario');
             if(usuario && password){
                 $('#link_tc').show();
+                $('.cerrarSesion').show();
             }else{
                  $('#link_tc').hide(); 
+                 $('.cerrarSesion').hide(); 
             } 
         },
 		mostrar:function(){

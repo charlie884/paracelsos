@@ -58,29 +58,29 @@
                                         '</div>'+
                                     '</div>'+
                                 '</div>'+
-                            +'');
+                            '');
 
-                            $.ajax({
-                                url: app.servidor+'obtener_rango_app'
-                            })
-                            .done(function(rango) {
-                              console.log("success rango");
-                              console.log(rango);
-                              var peso = parseInt(respuesta.peso);
-                              var pesoTotal = peso + parseInt(pesoTotal);
-                              console.log('pesoTotal: '+pesoTotal);
-                              $.each(rango,function(idx, vl) {
-                                var rang_min = parseInt(rango[idx].rango_minimo);
-                                var rang_max = parseInt(rango[idx].rango_maximo);
-                                console.log('rango_minimo envio: '+rang_min);
-                                // console.log('rango_maximo envio: '+rang_max);
-                                if (pesoTotal >= rang_min && pesoTotal <= rang_max) {
-                                  var pesoEnvio = rango[idx].precio;
-                                  console.log('peso envio: '+pesoEnvio);
-                                }
-                                $('#envio').val(pesoTotal);
-                              });                             
-                            })
+                            // $.ajax({
+                            //     url: app.servidor+'obtener_rango_app'
+                            // })
+                            // .done(function(rango) {
+                            //   console.log("success rango");
+                            //   console.log(rango);
+                            //   var peso = parseInt(respuesta.peso);
+                            //   var pesoTotal = peso + parseInt(pesoTotal);
+                            //   console.log('pesoTotal: '+pesoTotal);
+                            //   $.each(rango,function(idx, vl) {
+                            //     var rang_min = parseInt(rango[idx].rango_minimo);
+                            //     var rang_max = parseInt(rango[idx].rango_maximo);
+                            //     console.log('rango_minimo envio: '+rang_min);
+                            //     console.log('rango_maximo envio: '+rang_max);
+                            //     if (pesoTotal >= rang_min && pesoTotal <= rang_max) {
+                            //       var pesoEnvio = rango[idx].precio;
+                            //       console.log('peso envio: '+pesoEnvio);
+                            //     }
+                            //     $('#envio').val(pesoTotal);
+                            //   });                             
+                            // })
 
                             var cleave = new Cleave('#precio'+idx+'', {
                                 prefix: '$',
@@ -98,7 +98,28 @@
                         console.log('total compra: '+ app.carritoService.viewModel.total_s);
 
                     });
+                    var pesoTotal = 10000;
+                    $('#envio').val(pesoTotal);
+
                     $('#totalCh').val(app.carritoService.viewModel.total_s);
+
+                    var granTotal = app.carritoService.viewModel.total_s + pesoTotal;
+
+                    $('#granTotal').val(granTotal);
+
+                    var cleave = new Cleave('#granTotal', {
+                        prefix: '$',
+                        numeral: true,
+                        numeralThousandsGroupStyle: 'thousand',
+                        rawValueTrimPrefix: true
+                    });
+
+                    var cleave = new Cleave('#envio', {
+                        prefix: '$',
+                        numeral: true,
+                        numeralThousandsGroupStyle: 'thousand',
+                        rawValueTrimPrefix: true
+                    });
 
                     var cleave = new Cleave('#totalCh', {
                         prefix: '$',
@@ -164,6 +185,143 @@
                     cvc: 'CVC'
                 },
             });
+        },
+        agregarTC:function(){
+            var Exp = jQuery('#expTC').val();
+            values=Exp.split('/');
+            var mesExp = values[0];
+            var anioExp = values[1];
+
+           
+            var franquicia = payU.cardPaymentMethod($('#numeroTC').val());
+            console.log(app.pruebas);
+            var datosTC = {
+            number:$('#numeroTC').val().replace(/\s/g, ''),
+            name_card:$('#nombreTC').val(),
+            payer_id:window.localStorage.getItem('idUsuario'), 
+            exp_month:parseInt(mesExp),
+            exp_year:parseInt(anioExp),
+            method:franquicia,
+          }
+            console.log(datosTC);
+            console.log(app.pruebas);
+            if(app.pruebas){ 
+                payU.setURL('http://stg.api.payulatam.com/payments-api/4.0/service');
+                //payU.setPublicKey("6u39nqhq8ftd0hlvnjfs66eh8c"); /* Test */
+                payU.setPublicKey("PKfm6N499761MiCW566M9okj0N");
+                payU.setAccountID("500538");
+                payU.setListBoxID('pruebaTexto', 'texto opcional');
+                payU.setLanguage("es"); // optional
+            }else{
+                payU.setURL('https://api.payulatam.com/payments-api/4.0/service'); /* Producción */
+                payU.setPublicKey("PK6l4459RsY7GMV387Ym7I8lgE"); /* Sushitoc */
+        payU.setAccountID("556376"); //3 brasil // 9 argentina // 1 colombia /* Kheiron */
+        payU.setListBoxID('pruebaTexto', 'texto opcional');
+                //payU.getPaymentMethods();
+        //No tienes tarjeta crédito como medio de pago activo para tokenizar (Verifica que estás utilizando 
+        payU.setLanguage("es");// optional
+            }
+            
+            payU.setCardDetails(
+              datosTC
+            );
+            console.log(datosTC);
+            payU.getPaymentMethods();
+            payU.createToken(responseHandler);
+        //   console.log( payU);
+        //     if(app.pruebas == 1){ 
+        //         // payU.setURL('http://stg.api.payulatam.com/payments-api/4.0/service');
+        //         payU.setURL('https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi');
+        //         payU.setPublicKey("4Vj8eK4rloUd272L48hsrarnUA"); /* Test */
+        //         payU.setAccountID("512321"); //3 brasil // 9 argentina // 1 colombia /* Test */
+        // payU.setListBoxID('pruebaTexto', 'texto opcional');
+        //     payU.setLanguage("es"); // optional
+        //     }else{
+        //         // payU.setURL('https://gateway.payulatam.com/ppp-web-gateway/'); /* Producción */
+        //         payU.setURL('https://api.payulatam.com/payments-api/4.0/service');
+
+        //         payU.setPublicKey("pC56j2dD64ai24I41xI1e4WurV"); /* Kheiron */
+        //         payU.setAccountID("532870"); //3 brasil // 9 argentina // 1 colombia /* Kheiron */
+        // payU.setListBoxID('pruebaTexto', 'texto opcional');
+        //     payU.setLanguage("es"); // optional
+        //     }
+            
+        //     // payU.setListBoxID("pruebaTexto");
+        //     console.log(payU.getPaymentMethods());
+        //     payU.getPaymentMethods()
+        //     // payU.setLanguage("es"); // optional
+            
+        //     var fechaExp = $('#expTC').val();
+        //     var mesExp = fechaExp.split('/')[0].replace(/\s/g, '');
+        //     var anioExp = fechaExp.split('/')[1].replace(/\s/g, '');
+            
+        //     //Consultar Franquicia
+        //     var franquicia = payU.cardPaymentMethod ($('#numeroTC').val());
+        //     console.log();
+        //     var datosTC = {
+        //     number:$('#numeroTC').val().replace(/\s/g, ''),
+        //     name_card:$('#nombreTC').val(),
+        //     payer_id:window.localStorage.getItem('idUsuario'), 
+        //     exp_month:parseInt(mesExp),
+        //     exp_year:parseInt(anioExp),
+        //     method:franquicia
+        //   }
+        //     payU.setCardDetails(
+        //       datosTC
+        //     );
+        //     console.log(datosTC);
+            
+        //     payU.createToken(responseHandler);
+            
+            function responseHandler(response){
+                console.log(response);
+              if (response.error) {
+                // Se muestra los mensajes de error.
+                app.mostrarMensaje(response.error,'error');
+              }
+              else {
+                // Se obtiene el token y se puede guardar o enviarlo para algún pago.
+                var token = response.token;
+                var payer_id = response.payer_id;
+                var document = response.document;
+                var name = response.name;
+                    console.log('Tarjeta encriptada con Token: '+token);
+                    window.localStorage.setItem('token',token);
+                    var datosToken ={};
+                    datosToken.usuario = window.localStorage.getItem('idUsuario');
+                    datosToken.token =token;
+                    datosToken.test = app.pruebas;
+                    Pace.track(function(){
+                $.ajax({
+                  method: "GET",
+                  url: app.servidor+"agregar_token_payu",
+                  data: datosToken,
+                  dataType: 'json'
+                })
+                .done(function( tokenIngreso ) {
+                  console.log(tokenIngreso); 
+                            if(!tokenIngreso.error){
+                                app.mostrarMensaje(tokenIngreso.message,'success');
+                                $('#numeroTC').val('');
+                                $('#nombreTC').val('');
+                                $('#expTC').val('');
+                                if(app.citasServicio.modelo.procesoCompra === 1){
+                                    app.application.navigate('view-pago','fade');
+                                }else{
+                                    app.application.navigate('view-ver-tc','fade');    
+                                }
+                                
+                            }else{
+                                app.mostrarMensaje(tokenIngreso.message,'error');
+                            }
+                });
+              });
+            
+                    //modelo.pagoExitoso();
+                    
+                    
+              }
+            }
         },
         enviarSolicitud:function(){
              var prueba = true;

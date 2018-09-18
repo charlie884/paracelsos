@@ -30,6 +30,8 @@
 
                             if (result.length >= 1) {
 
+                                $('.cont_btnCar').show('');
+
                                 console.log('entro apepend btn');
                                 $('#btn_carrito').html('');
                                 $('#totalT').val(0);
@@ -38,13 +40,20 @@
                                     console.log('entre idUsuario');
                                     $('#btn_carrito').append('<a href="#view-checkout" class="readmore">Realizar compra</a>');                                    
                                 }
+                                if (result.length >3) {
+                                    $('#view-carrito .pt').css('position','relative');
+                                }
 
                             }else{
+
+                                $('.cont_btnCar').hide('');
+
                                 $('#productos_carrito').append(''+
                                     '<div align="center" class="span12">'+
-                                        '<h3 style="margin-top: 4em;">Tu carrito de compras esta vacío</h3>'+
+                                    '<img style="margin-top:2em;" src="images/uppscar.png" alt="" class="ico">'+
+                                        '<h3 style="margin-top: 1em;">No has agrgado productos al carrito</h3>'+
                                     '</div>  '+                              
-                                +'');
+                                '');
                             }
 
                             app.carritoService.viewModel.total_s = 0;
@@ -111,14 +120,14 @@
                                                                 '<p>Precio unitario</p>'+
                                                             '</div>'+
                                                             '<div class="span6">'+
-                                                                '<p class="precio"><input style="width:100%;font-size:10px;" id="valor'+idx+'" class="cValor" value="'+result[idx].precio+'" type="text" readonly></p>'+
+                                                                '<p class="precio"><input style="width:100%;font-size:10px;" id="valor'+val.id+'" class="cValor" value="'+result[idx].precio+'" type="text" readonly></p>'+
                                                             '</div>'+
                                                         '</div>'+
                                                     '</div>'+
                                                 '</div>'+
                                             '</div>'+
-                                        +'');
-                                        var cleave = new Cleave('#valor'+idx+'', {
+                                        '');
+                                        var cleave = new Cleave('#valor'+val.id+'', {
                                             prefix: '$',
                                             numeral: true,
                                             numeralThousandsGroupStyle: 'thousand',
@@ -152,26 +161,45 @@
                                     rawValueTrimPrefix: true
                                 });
                             });
+                            var envio = 10000;
+                            $('#envioCar').val(envio);
+                            var granTotal = app.carritoService.viewModel.total_s + 10000;
+                            $('#totalT').val(granTotal);
+                            var cleave = new Cleave('#envioCar', {
+                                prefix: '$',
+                                numeral: true,
+                                numeralThousandsGroupStyle: 'thousand',
+                                rawValueTrimPrefix: true
+                            });
+                            var cleave = new Cleave('#totalT', {
+                                prefix: '$',
+                                numeral: true,
+                                numeralThousandsGroupStyle: 'thousand',
+                                rawValueTrimPrefix: true
+                            });
                         });
                     });
 
                 }else{
+
+                $('.cont_btnCar').hide('');
 
                     $('#productos_carrito').append(''+
                         '<div align="center" class="span12">'+
                         '<img style="margin-top:2em;" src="images/uppscar.png" alt="" class="ico">'+
                             '<h3 style="margin-top: 1em;">No has agrgado productos al carrito</h3>'+
                         '</div>  '+                              
-                    +'');
+                    '');
                 }                
             }else{
 
+                $('.cont_btnCar').html('');
                 $('#productos_carrito').append(''+
                     '<div align="center" class="span12">'+
                         '<img style="margin-top: 2em;" src="images/upps.png" alt="" />'+
                         '<h3 style="margin-top: 1em;">Debes registrarte o iniciar sesión para realizar compras</h3>'+
                     '</div>  '+                              
-                +'');
+                '');
             }
         },
         aumentar:function(stock,precio,id,idx){

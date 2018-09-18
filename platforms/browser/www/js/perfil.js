@@ -269,7 +269,7 @@
                                     window.localStorage.setItem('fotoUsuario','images/icon_no.jpg');
                                     app.favoritos = [];
                                     window.localStorage.setItem('favoritos',app.favoritos); 
-                                    window.localStorage.setItem('llave_payu') = ''; 
+                                    window.localStorage.setItem('llave_payu',''); 
                                     $('.datosFoto').attr(
                                         'src','images/icon_no.jpg'
                                     );

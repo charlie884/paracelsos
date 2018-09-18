@@ -5,6 +5,7 @@
     app.servidor = 'https://paracelsos.com/index.php?option=com_functions&task=';
     app.server = 'https://paracelsos.com/';
     app.share = 'https://paracelsos.com/index.php?option=com_k2&view=item&id=';
+    app.pruebas = 1; //1 pruebas - 0 Producción
     
     app.favoritos = [];
     app.favoritas = [];

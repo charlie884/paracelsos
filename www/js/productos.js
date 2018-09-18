@@ -91,97 +91,113 @@
             $('.textPortada').html('');
             $('#accionesDetalle').html('');
             $('.portadaProducto').attr('style','');
-            if(window.localStorage.getItem('nombreUsuario')){
-                var nombreUsuario = window.localStorage.getItem('nombreUsuario');
-                var correoUsuario = window.localStorage.getItem('usernameUsuario');
-            } else {                
-                var nombreUsuario = '';
-                var correoUsuario = '';
-            }
-            Pace.track(function(){
-                $.ajax({
-                    method: 'POST',
-                    url: app.servidor+'obtener_info_detalle_cantidad_app',
-                    dataType: 'json',
-                    data: {
-                        id:id,
-                    }
-                }).done(function(detalle) {
-                    Pace.track(function(){
-                        $.ajax({
-                            method: 'POST',
-                            url: app.servidor+'productos_detalle',
-                            dataType: 'json',
-                            data: {
-                                id:id,
-                            }
-                        }).done(function(respuesta) {
-                            console.log('producto detalle: '+respuesta.categoria);
-                            $('.portadaProducto').attr('style','background-image:url('+respuesta.imagen+');');
-                            $('.titlePortada').append(respuesta.producto);
-                            $('.textPortada').append(respuesta.descripcion);
-                            if(respuesta.video){
-                                //$('.video').append('<video width="320" height="240"><source src="'+app.server+'images/videos/'+respuesta.video+'"></video>');
-                            } 
-                            // $('#accionesDetalle').append('<div class="leerMas"><p class="masStyle">Solicita más información</p><input placeholder="Nombre" id="inputNombreSolicitud" value="'+nombreUsuario+'"><input placeholder="Correo electrónico" id="inputCorreoSolicitud" value="'+correoUsuario+'"><input placeholder="Teléfono" id="inputTelefonoSolicitud"><textarea placeholder="Mensaje" id="inputMensajeSolicitud"></textarea><a onclick="app.productosService.viewModel.solicitud()" data-role="button"><div class="botonMas">Solicitar</div></a></div>');
-                            // console.log('detalle: '+detalle[2].categoria);
-                            console.log(JSON.stringify(detalle));
-                            if (respuesta.categoria == 4) {
-                                $('.cleanButton').css('display', 'none');                                
-                                $('.conferenceB').css('display', 'block');                                
-                            }else{
-                                $('.cleanButton').css('display', 'block');
-                                $('.conferenceB').css('display', 'none');
-                                $.each(detalle,function(idx,val){
-                                    $('.plusProduct').append(''+'<div class="row-fluid">'+
-                                            '<div class="span6">'+
-                                                '<div class="b_cantidad">'+
-                                                    '<p>Frasco por: <span><button id="cant'+idx+'" class="btn-cant">'+detalle[idx].cantidad+'</button></span></p>'+                                                
+            if (window.localStorage.getItem('idUsuario')) {
+                if(window.localStorage.getItem('nombreUsuario')){
+                    var nombreUsuario = window.localStorage.getItem('nombreUsuario');
+                    var correoUsuario = window.localStorage.getItem('usernameUsuario');
+                    console.log('vista detalle pro nom usu: '+nombreUsuario+' '+correoUsuario);
+                } else {                
+                    var nombreUsuario = '';
+                    var correoUsuario = '';
+                }
+                Pace.track(function(){
+                    $.ajax({
+                        method: 'POST',
+                        url: app.servidor+'obtener_info_detalle_cantidad_app',
+                        dataType: 'json',
+                        data: {
+                            id:id,
+                        }
+                    }).done(function(detalle) {
+                        Pace.track(function(){
+                            $.ajax({
+                                method: 'POST',
+                                url: app.servidor+'productos_detalle',
+                                dataType: 'json',
+                                data: {
+                                    id:id,
+                                }
+                            }).done(function(respuesta) {
+                                console.log('producto detalle: '+respuesta.categoria);
+                                $('.portadaProducto').attr('style','background-image:url('+respuesta.imagen+');');
+                                $('.titlePortada').append(respuesta.producto);
+                                $('.textPortada').append(respuesta.descripcion);
+                                if(respuesta.video){
+                                    //$('.video').append('<video width="320" height="240"><source src="'+app.server+'images/videos/'+respuesta.video+'"></video>');
+                                } 
+                                // $('#accionesDetalle').append('<div class="leerMas"><p class="masStyle">Solicita más información</p><input placeholder="Nombre" id="inputNombreSolicitud" value="'+nombreUsuario+'"><input placeholder="Correo electrónico" id="inputCorreoSolicitud" value="'+correoUsuario+'"><input placeholder="Teléfono" id="inputTelefonoSolicitud"><textarea placeholder="Mensaje" id="inputMensajeSolicitud"></textarea><a onclick="app.productosService.viewModel.solicitud()" data-role="button"><div class="botonMas">Solicitar</div></a></div>');
+                                // console.log('detalle: '+detalle[2].categoria);
+                                console.log(JSON.stringify(detalle));
+                                if (respuesta.categoria == 4) {
+                                    $('.cleanButton').css('display', 'none');                                
+                                    $('.conferenceB').css('display', 'block');                                
+                                }else{
+                                    $('.cleanButton').css('display', 'block');
+                                    $('.conferenceB').css('display', 'none');
+                                    $.each(detalle,function(idx,val){
+                                        $('.plusProduct').append(''+'<div class="row-fluid">'+
+                                                '<div class="span6">'+
+                                                    '<div class="b_cantidad">'+
+                                                        '<p>Frasco por: <span><button id="cant'+idx+'" class="btn-cant">'+detalle[idx].cantidad+'</button></span></p>'+                                                
+                                                    '</div>'+
                                                 '</div>'+
-                                            '</div>'+
-                                            '<div class="span6">'+
-                                                '<div class="i_cantidad">'+
-                                                    '<p><input id="valor'+idx+'" class="cValor" value="'+detalle[idx].precio+'" type="text" readonly></p>'+                                                
+                                                '<div class="span6">'+
+                                                    '<div class="i_cantidad">'+
+                                                        '<p><input id="valor'+idx+'" class="cValor" value="'+detalle[idx].precio+'" type="text" readonly></p>'+                                                
+                                                    '</div>'+
                                                 '</div>'+
+                                                // '<div class="span3">'+
+                                                //     '<div class="i_cantidad">'+
+                                                //         '<p><input id="impuesto'+idx+'" class="cValor" value="'+detalle[idx].impuesto+'" type="text" readonly></p>'+                                                
+                                                //     '</div>'+
+                                                // '</div>'+
                                             '</div>'+
-                                            // '<div class="span3">'+
-                                            //     '<div class="i_cantidad">'+
-                                            //         '<p><input id="impuesto'+idx+'" class="cValor" value="'+detalle[idx].impuesto+'" type="text" readonly></p>'+                                                
-                                            //     '</div>'+
-                                            // '</div>'+
-                                        '</div>'
-                                    +'');
-                                    $('#cant'+idx+'').click(function(){
-                                        $('.btn-cant').removeClass('activeB');
-                                        $(this).addClass('activeB');
+                                        '');
+                                        $('#cant'+idx+'').click(function(){
+                                            $('.btn-cant').removeClass('activeB');
+                                            $(this).addClass('activeB');
 
-                                        $('#cantidadP').val(detalle[idx].cantidad);
-                                        $('#precio').val(detalle[idx].precio);
+                                            $('#cantidadP').val(detalle[idx].cantidad);
+                                            $('#precio').val(detalle[idx].precio);
 
+                                        });
+                                        var cleave = new Cleave('#valor'+idx+'', {
+                                            prefix: '$',
+                                            numeral: true,
+                                            numeralThousandsGroupStyle: 'thousand',
+                                            rawValueTrimPrefix: true
+                                        });
+                                        // var cleave = new Cleave('#impuesto'+idx+'', {
+                                        //     prefix: '$',
+                                        //     numeral: true,
+                                        //     numeralThousandsGroupStyle: 'thousand',
+                                        //     rawValueTrimPrefix: true
+                                        // });
                                     });
-                                    var cleave = new Cleave('#valor'+idx+'', {
-                                        prefix: '$',
-                                        numeral: true,
-                                        numeralThousandsGroupStyle: 'thousand',
-                                        rawValueTrimPrefix: true
-                                    });
-                                    // var cleave = new Cleave('#impuesto'+idx+'', {
-                                    //     prefix: '$',
-                                    //     numeral: true,
-                                    //     numeralThousandsGroupStyle: 'thousand',
-                                    //     rawValueTrimPrefix: true
-                                    // });
-                                });
 
-                            }
-                                
-                        })
-                    });
-                    
+                                }
+                                    
+                            })
+                        });
                         
-                })
-            });
-            
+                            
+                    })
+                });
+            }else{
+
+                $('.cleanButton').hide('');
+                $('.conferenceB').hide(); 
+                $('.portadaProducto').hide(); 
+                $('.titlePortada').hide(); 
+
+                $('.upps').append(''+
+                    '<div align="center" class="span12">'+
+                        '<img style="margin-top: 2em;" src="images/upps.png" alt="" />'+
+                        '<h3 style="margin-top: 1em;">Debes registrarte o iniciar sesión para realizar compras</h3>'+
+                    '</div> '+                              
+                '');
+
+            }
         },       
         aumentar: function(){
             cant_producto = $('#cantidadP').val();
@@ -231,7 +247,7 @@
 
             if(cant_producto == 0){
                 app.mostrarMensaje(
-                  'Debes seleccionar una unidad',
+                  'Debes seleccionar un frasco',
                   'error'
                 );
             } else if (cantidad == 0){  
@@ -264,13 +280,13 @@
                     }else{
                         if(resultado.status == 'added'){
                             app.mostrarMensaje(
-                               resultado.result,
+                               'Ha sido agregado de forma exitosa un producto ',
                               'success'
                             );
                             // setTimeout(function(){ location.assign('<?= JURI::base() ?>carrito'); }, 1000);
                         }else if( resultado.status == 'error'){
                             app.mostrarMensaje(
-                              'Ya habías seleccionado este producto',
+                              'Ya habías seleccionado este producto, se encuentra en el carrito',
                               'error'
                             );
                         }else{

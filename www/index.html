@@ -8,6 +8,7 @@
     
     <!-- Kendo Mobile - Apache Cordova -->
     <script src="cordova.js"></script>
+    <script type="text/javascript" src="https://gateway.payulatam.com/ppp-web-gateway/javascript/PayU.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
@@ -42,7 +43,8 @@
     <script src="js/consultar.js"></script>
     <script src="js/noticias.js"></script>
     <script src="js/carrito.js"></script>
-    <script src="js/checkout.js"></script>
+    <script src="js/checkout.js"></script>    
+    
 </head>
 
 <body id="kendoUiMobileApp">
@@ -169,7 +171,7 @@
                 <li><a href="#view-terminos">Términos y condiciones<img src="images/icon_right.png"></a></li>
                 <li><a href="#view-politicas">Políticas<img src="images/icon_right.png"></a></li>
                 <!--<li><a href="#view-contact">Contacto<img src="images/icon_right.png"></a></li>-->
-                <li><a class="" onclick="click:app.perfilService.viewModel.cerrarSesion()">Cerrar sesión<img src="images/icon_right.png"></a></li>
+                <li><a class="cerrarSesion" onclick="click:app.perfilService.viewModel.cerrarSesion()">Cerrar sesión<img src="images/icon_right.png"></a></li>
             </ul>
             <a onclick="cordova.InAppBrowser.open('http://emerald.studio','_system')">By <img src="images/ico_emerald2.png"/></a>
         </footer>
@@ -368,6 +370,9 @@
         <div class="titlePortada"></div>
         <h3 class="cleanButton">Seleccione la cantidad</h3>
         <div class="plusProduct margen"></div>
+        <div class="upps">
+            
+        </div>
         <div class="margen cleanButton">
             <div class="row-fluid">
                 <div class="span6 row-fluid">
@@ -407,6 +412,14 @@
                     </div>
                     <div class="total totalCar span6">
                         <input class="cValor" id="totalT" type="text" readonly>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <p>Envío</p>
+                    </div>
+                    <div class="total span6">
+                        <input class="cValor" id="envioCar" type="text" readonly>
                     </div>
                 </div>
                 <div class="row-fluid">

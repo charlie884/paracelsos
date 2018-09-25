@@ -43,7 +43,8 @@
 			var correo = jQuery('#inputCorreo').val();
 			var ciudad = jQuery('#inputCiudad').val();
 			var pais = jQuery('#inputPais').val();
-			var profesion = jQuery('#inputProfesion').val();
+            var profesion = jQuery('#inputProfesion').val();
+			var moneda = jQuery('#monedaReg').val();
 			var contrasena = jQuery('#inputContrasena').val();
 			var contrasena2 = jQuery('#inputConfirmar').val();
 			var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
@@ -62,7 +63,9 @@
                app.mostrarMensaje('Escriba su país', 'error');
 			} else if(!profesion){
                app.mostrarMensaje('Escriba su profesión', 'error');
-			} else if(!contrasena){
+            } else if(!moneda){
+               app.mostrarMensaje('Elija su moneda', 'error');
+            } else if(!contrasena){
                app.mostrarMensaje('Escriba su contraseña', 'error');
 			} else if(!contrasena2 || (contrasena2 != contrasena)){
                app.mostrarMensaje('Las contraseñas no coinciden', 'error');
@@ -79,7 +82,8 @@
 						correo: correo,
 						ciudad: ciudad,
 						pais: pais,
-						profesion: profesion,
+                        profesion: profesion,
+						moneda: moneda,
 						contrasena: contrasena
 					},
 					success: function(resultado) {
@@ -361,6 +365,7 @@
             }
         },
         mostrarInfoPrincipal: function(){
+            $('#moneda').html('');
              Pace.track(function(){
                 $.ajax({
                     method:'GET',
@@ -378,6 +383,17 @@
                     $('#inputCiudadEditar').val(info.ciudad);
                     $('#inputPaisEditar').val(info.pais);
                     $('#inputProfesionEditar').val(info.profesion);
+                    if (info.moneda == 'cop') {
+                        $('#moneda').append(''+
+                            '<option selected value="cop">COP</option>'+
+                            '<option value="usd">USD</option>'+
+                        '');                        
+                    }else{
+                        $('#moneda').append(''+
+                            '<option value="cop">COP</option>'+
+                            '<option selected value="usd">USD</option>'+
+                        '');                          
+                    }
                     window.localStorage.setItem('fotoUsuario',info.foto);
                     if(window.localStorage.getItem('fotoUsuario') != app.server) {
                         $('.datosFoto').attr(
@@ -390,6 +406,39 @@
                     }
                 })
             });
+
+            $('.cambio_moneda').click(function(event) {
+                var habilitar = $('.cambio_moneda').val();
+                console.log(habilitar);
+                if (habilitar == '0') {
+                    console.log('entro ajax');
+                    $.ajax({
+                        type: 'POST',
+                        url: app.servidor+'select_moneda',
+                        dataType: 'json',
+                        data: {
+                            habilitar: habilitar
+                        },
+                    })
+                    .done(function(result) {
+                        console.log(result);                         
+                    })
+                    
+                }else if (habilitar == '1') {
+                    console.log('entro ajax');
+                    $.ajax({
+                        type: 'POST',
+                        url: app.servidor+'select_moneda',
+                        dataType: 'json',
+                        data: {
+                            habilitar: habilitar
+                        },
+                    })
+                    .done(function(result) {
+                        console.log(result);
+                    })              
+                }
+            });             
             
             $('#editarFoto').click(function(){
                 navigator.notification.confirm(
@@ -491,8 +540,9 @@
             var ciudad = $('#inputCiudadEditar').val();
             var pais = $('#inputPaisEditar').val();
             var profesion = $('#inputProfesionEditar').val();
+            var moneda = $('#moneda').val();
              
-            if(nombre.length < 5 || ciudad.length < 2 || pais.length < 2 || profesion.length < 5){
+            if(nombre.length < 5 || ciudad.length < 2 || pais.length < 2 || profesion.length < 3){
                 // Campos incorrectos
                 app.mostrarMensaje('Complete el formulario correctamente','error');
             } else {           
@@ -524,6 +574,7 @@
                             profesion:profesion,
                             pais:pais,
                             ciudad:ciudad,
+                            moneda:moneda,
                             id:window.localStorage.getItem('idUsuario')
                         }
         			})

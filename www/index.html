@@ -369,7 +369,7 @@
         <div class="portadaProducto"></div>
         <div class="titlePortada"></div>
         <h3 class="cleanButton">Seleccione la cantidad</h3>
-        <div class="plusProduct margen"></div>
+        <div class="plusProduct margen"></div>        
         <div class="upps">
             
         </div>
@@ -388,6 +388,7 @@
         </div>
         <input type="hidden" name="cantidad" id="cantidadP" value="0">
         <input type="hidden" name="precio" id="precio" value="0">
+        <input type="hidden" name="peso" id="peso" value="0">
         <div class="textPortada"></div>
         <a href="#" target="_blank" class="conferenceB">Ver conferencia</a>
         <!-- <div class="video"></div> -->
@@ -408,18 +409,10 @@
             <div class="span12 pt">
                 <div class="row-fluid">
                     <div class="span6">
-                        <p>Total</p>
+                        <p>Sub Total - sin envío</p>
                     </div>
                     <div class="total totalCar span6">
                         <input class="cValor" id="totalT" type="text" readonly>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span6">
-                        <p>Envío</p>
-                    </div>
-                    <div class="total span6">
-                        <input class="cValor" id="envioCar" type="text" readonly>
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -437,7 +430,7 @@
     <div data-role="view"
         id="view-checkout"
         data-layout="main"
-        data-title="checkout"
+        data-title="Facturación"
         data-model="app.checkoutService.viewModel"
         data-show="app.checkoutService.viewModel.carrito">
         
@@ -453,6 +446,7 @@
                <p><input class="inputRegistro" id="inputDireccionEnvio" type="text" placeholder="Dirección de envío (Apt, Ofc, etc)"></p>
                <p><input class="inputRegistro" id="inputPaisCheck" type="text" placeholder="País"></p>
                <p><input class="inputRegistro" id="inputCiudadCheck" type="text" placeholder="Ciudad"></p>
+                <h3>Resumen de tus productos</h3>
                <div id="productos_b">
                     
                </div>
@@ -479,6 +473,21 @@
                         </div>
                         <div class="total span6">
                             <input class="cValor" id="granTotal" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <p>Cupon</p>
+                        </div>
+                        <div class="total span6">
+                            <input class="" id="cupon" placeholder="Código cupon" type="text">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <p class="btn_rc" align="center">
+                                <div style="width: 68%" id="cuponBtn" class="readmore">Aplicar cupon</div>
+                            </p>
                         </div>
                     </div>
                     <div class="row-fluid">
@@ -617,6 +626,13 @@
                    <p><input class="inputRegistro" id="inputCiudad" type="text" placeholder="Ciudad"></p>
                    <p><input class="inputRegistro" id="inputPais" type="text" placeholder="País"></p>
                    <p><input class="inputRegistro" id="inputProfesion" type="text" placeholder="Profesión"></p>
+                   <p>
+                    <select class="cambio_moneda" name="cambio" id="monedaReg">
+                        <option value="">seleccione moneda</option>
+                        <option value="cop">COP</option>
+                        <option value="usd">USD</option>
+                    </select>
+                    </p>
                    <p><input class="inputRegistro" id="inputContrasena" type="password" placeholder="Contraseña"></p>
                    <p><input class="inputRegistro" id="inputConfirmar" type="password" placeholder="Confirmar contraseña"></p>
                    <p><button type="submit">Registrar</button></p>
@@ -690,6 +706,10 @@
            <p><input id="inputCiudadEditar" type="text" placeholder="Ciudad" class="edit"></p>
            <p><input id="inputPaisEditar" type="text" placeholder="País" class="edit"></p>
            <p><input id="inputProfesionEditar" type="text" placeholder="Profesión" class="edit"></p>
+           <p>
+            <select class="cambio_moneda" name="cambio" id="moneda">
+            </select>
+            </p>
            <p><button data-bind="click:guardarPerfil">Guardar</button></p>
        </div>
     </div> 

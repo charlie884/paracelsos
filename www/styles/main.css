@@ -112,7 +112,7 @@ input {height: 4.5em !important; font-size:17px;}
 #view-bienvenida h3{position: relative;color:#0d1818;margin-bottom: 1em;}
 #view-bienvenida h3::before{content: '';width: 60px;height: 3px;background: #015187;position: absolute;bottom: 0;}
 #view-bienvenida #noticiaDia {padding:0.5em;margin-bottom:2em;}
-#view-bienvenida p {margin:0;text-align:justify;font-weight:bolder;}
+#view-bienvenida p {margin:0;text-align:left;font-weight:bolder;}
 #view-bienvenida #noticiaDia .fecha {margin-bottom:0.5em;}
 #view-bienvenida #noticiaDia a{-ms-word-break: break-all;word-break: break-all;}
 #view-bienvenida .itemHome{width:50%;padding:7%;margin-right:3%;float:left;background-size:cover;background-position:center;background-repeat:no-repeat;}
@@ -247,7 +247,8 @@ input {height: 4.5em !important; font-size:17px;}
 #view-checkout img {width:6em;margin-top:0.5em;}
 #view-checkout #envio {background: #003366;color: #fff;    width: 75% !important; border: none;}
 #view-checkout #granTotal {background: #003366;color: #fff;    width: 75% !important;  border: none;}
-#view-checkout input {height:3em !important;text-indent:0.5em;background: #faf9fe;border:none;color:#000000;width:75%;padding:1em;border:1px solid #dbe2f7;    -webkit-appearance: none;    appearance: none;}
+#view-checkout #cupon {height: 2em !important;margin-top: 9px;font-size: 14px;}
+#view-checkout input {font-size:14px;height:3em !important;text-indent:0.5em;background: #faf9fe;border:none;color:#000000;width:75%;padding:1em;border:1px solid #dbe2f7;    -webkit-appearance: none;    appearance: none;}
 #view-checkout button {background: #1b3664;border:none;color:#FFFFFF;width:75%;padding:1em;font-size:17px;}
 #view-checkout .span12{width: 100%;}
 #view-checkout .span10{width: 90%;}
@@ -260,7 +261,6 @@ input {height: 4.5em !important; font-size:17px;}
 #view-checkout .cont_proc{padding: 1%;border-bottom: solid 1px gray;}
 #view-checkout #totalCh{background: #003366;color: #fff;border: none;} 
 #view-checkout .readmore{background: #fff;color: #015187;padding: 1em;border-radius: 6px;text-decoration: none;} 
-#view-checkout .btn_rc{padding-bottom: 1em;} 
 #view-checkout .pt{bottom: 0px;background: #003366;color: #fff;} 
 #view-checkout .precio input {border: none;width: 30%;text-align: center;height: 100% !important;background: none;}
 
@@ -292,9 +292,10 @@ input {height: 4.5em !important; font-size:17px;}
 #view-detalle-producto .margen .add{color: #fff;background-color: #1f3664;text-align: center;text-decoration: none;padding: 1em;cursor: pointer;}
 #view-detalle-producto .conferenceB{color: #fff;background-color: #1f3664;text-align: center;text-decoration: none;padding: 1em;cursor: pointer;}
 #view-detalle-producto input {border: none;width: 100%;text-align: center; height: 100% !important;}
-#view-detalle-producto .row-fluid{display: inline-flex;}
+#view-detalle-producto .row-fluid{display: inline-flex;width: 100%;}
 #view-detalle-producto .span3{width: 33%;}
 #view-detalle-producto .span6{width: 50%;}
+#view-detalle-producto .cambio_moneda{margin: 1em 3em;}
 #view-detalle-producto .i_cantidad input {height: 2em !important;}
 #view-detalle-producto .b_cantidad {text-align: center;}
 #view-detalle-producto .btn-cant{color: #fff !important;background-color: #1f3664;text-align: center;text-decoration: none;padding: 1em;cursor: pointer;border: none;width: 4em;}
@@ -317,6 +318,7 @@ input {height: 4.5em !important; font-size:17px;}
 #view-registro #registroForm{text-align:center;font-family: 'VarelaRoundRegular' !important;}
 #view-registro img {width:25%;margin-top:0.5em;}
 #view-registro input {height:3em !important;text-indent:0.5em;background: #faf9fe;border:none;color:#000000;width:75%;padding:1em;border:1px solid #dbe2f7;    -webkit-appearance: none;    appearance: none;}
+#view-registro select {height:4em !important;text-indent:0.5em;background: #faf9fe;border:none;color:#000000;width:75%;padding:1em;border:1px solid #dbe2f7;    -webkit-appearance: none;    appearance: none;}
 #view-registro button {background: #1b3664;border:none;color:#FFFFFF;width:75%;padding:1em;font-size:17px;}
 
 
@@ -349,6 +351,7 @@ input {height: 4.5em !important; font-size:17px;}
 #view-editar-perfil #editarPerfil,#view-editar-perfil #editarForm {text-align:center;}
 #view-editar-perfil #editarPerfil img {width:8em;margin-top:1em;}
 #view-editar-perfil input {border-radius:10px;height:3em;text-indent:0.5em;border:none;color:#000000;width:75%;padding:1em;border:1px solid #dbe2f7;}
+#view-editar-perfil select {border-radius:10px;height:4em;text-indent:0.5em;border:none;color:#000000;width:75%;padding:1em;border:1px solid #dbe2f7;}
 #view-editar-perfil .no-edit {background-color: #f0f0f0;}
 #view-editar-perfil .edit {background:url(../images/ico_input.png) no-repeat 100%;background-size:10%;background-color: #f0f0f0;}
 #view-editar-perfil button {background: #1b3664;border:none;color:#FFFFFF;width:75%;padding:1em;}

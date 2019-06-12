@@ -15,6 +15,7 @@
             $('#contenidoSlider').html('');
             $('.plusProduct').html('');
             $('#cantidad').val(0);
+            console.log('<!-- View Productos -->');
             Pace.track(function(){
                 $.ajax({
                     method: 'GET',
@@ -327,6 +328,20 @@
 
                     }
                 });
+                $.ajax({
+                    url: app.servidor+'obtener_cantidad_productos_app',
+                    dataType: 'json',
+                    data:{llave:window.localStorage.getItem('llave_payu')}
+                }).
+                done(function(badage){
+                    console.log('badage; '+badage)
+                    if (badage > 0) {
+                        $('#carrito').addClass('badge_twitter');                    
+                        $('#carrito').text(badage);                    
+                    }else{
+                        console.log('no hay productos en carrito')
+                    }
+                })
 
             }
         }, 

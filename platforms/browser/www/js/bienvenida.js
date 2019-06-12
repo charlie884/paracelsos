@@ -97,6 +97,22 @@
                 })
             });
     	},
+        // badage:function(){
+        //     var llave = window.localStorage.getItem('llave_payu');
+        //     $.ajax({
+        //         url: app.servidor+'obtener_cantidad_productos',
+        //         dataType: 'json',
+        //         data:{llave:llave}
+        //     }).
+        //     done(function(badage){
+        //         console.log('badage; '+badage)
+        //         if (badage > 0) {
+        //             $('#carrito').addClass('badge_twitter');                    
+        //         }else{
+        //             console.log('no hay productos en carrito')
+        //         }
+        //     })
+        // }
     });
 
     app.bienvenidaService = {

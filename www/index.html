@@ -8,12 +8,13 @@
     
     <!-- Kendo Mobile - Apache Cordova -->
     <script src="cordova.js"></script>
-    <script type="text/javascript" src="https://gateway.payulatam.com/ppp-web-gateway/javascript/PayU.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
 
     <!-- Plugins -->    
+    <script type="text/javascript" src="http://gateway.payulatam.com/ppp-web-gateway/javascript/PayU.js"></script>
     <script src="js/plugins/swiper.jquery.min.js"></script>
     <script src="js/plugins/noty.js"></script>
     <link href="styles/plugins/noty.css" rel="stylesheet">
@@ -27,6 +28,7 @@
     <script src="js/plugins/cleave.min.js"></script>
     <link href="styles/plugins/jquery-te.css" rel="stylesheet">
     <link href="styles/font-awesome.min.css" rel="stylesheet">
+    <script src="js/plugins/ddslick.js"></script> 
     
     <!-- Styles -->
     
@@ -446,10 +448,10 @@
                <p><input class="inputRegistro" id="inputDireccionEnvio" type="text" placeholder="Dirección de envío (Apt, Ofc, etc)"></p>
                <p><input class="inputRegistro" id="inputPaisCheck" type="text" placeholder="País"></p>
                <p><input class="inputRegistro" id="inputCiudadCheck" type="text" placeholder="Ciudad"></p>
-                <h3>Resumen de tus productos</h3>
+<!--                 <h3>Resumen de tus productos</h3>
                <div id="productos_b">
                     
-               </div>
+               </div> -->
                 <div align="center" class="span12 pt">
                     <div class="row-fluid">
                         <div class="span6">
@@ -517,11 +519,12 @@
             <div class="card-wrapper"></div>
 
             <div class="form-container active">
-                <form action="">
+                <form action="" id="crear-token">
                     <input placeholder="Número de tarjeta" type="tel" name="number" id="numeroTC">
                     <input placeholder="Nombre en tarjeta" type="text" name="name" id="nombreTC">
                     <input placeholder="MM/AAAA" type="tel" name="expiry" id="expTC">
-                    <input placeholder="CVC" type="tel" name="cvc" id="cvcTC">
+                    <!-- <input placeholder="CVC" type="tel" name="cvc" id="cvcTC"> -->
+                    <input placeholder="Cédula" type="tel" name="cedula" id="cedula">
                 </form>
             </div>
         </div>

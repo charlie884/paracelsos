@@ -384,6 +384,7 @@ input {height: 4.5em !important; font-size:17px;}
 #view-responder-admin #responder_admin .jqte_editor {;margin:0 auto;margin-bottom:1em;height:20em;text-indent:0.5em;background: #faf9fe;border:none;color:#a2adbd;padding:1em;border:1px solid #dbe2f7;}
 #view-responder-admin #responder_admin .btn_enviar{cursor:pointer;float: right;width: 60%;margin-right:2em;text-align: center;color: #fff;padding: 5px 0;font-size: 18px;background: #005288; /* Old browsers */background: -moz-linear-gradient(left, #005288 0%, #1b3664 100%); /* FF3.6-15 */background: -webkit-linear-gradient(left, #005288 0%,#1b3664 100%); /* Chrome10-25,Safari5.1-6 */background: linear-gradient(to right, #005288 0%,#1b3664 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#005288', endColorstr='#1b3664',GradientType=1 ); /* IE6-9 */}
 
+.badge_twitter::after {position: absolute;content: '';width: 30px;height: 30px;background: #ff0000;border-radius: 50px;right: 0;z-index: -2;}
 
 @media(min-width:768px){
     

@@ -109,46 +109,46 @@
                                     });                         
                                 })
                                 
-                                $.ajax({
-                                    method: 'GET',
-                                    url: app.servidor+'obtener_img_productos_carrito_app',
-                                    dataType: 'json',
-                                    data: {
-                                        id:id_producto
-                                    }
-                                })
-                                .done(function(respuesta) {
-                                    console.log(respuesta);
+                                // $.ajax({
+                                //     method: 'GET',
+                                //     url: app.servidor+'obtener_img_productos_carrito_app',
+                                //     dataType: 'json',
+                                //     data: {
+                                //         id:id_producto
+                                //     }
+                                // })
+                                // .done(function(respuesta) {
+                                //     console.log(respuesta);
 
-                                    $('#productos_b').append(''+
-                                        '<div class="mtb">'+
-                                            '<div class="row-fluid cont_proc">'+
-                                                '<div class="imagen-galeria span3">'+
-                                                    '<img src="'+app.server+''+respuesta.imagen+'">'+
-                                                '</div>'+
-                                                '<div class="span9">'+
-                                                    '<div class="row-fluid">'+
-                                                        '<div class="span6">'+
-                                                            '<p>Cantidad</p>'+
-                                                        '</div>'+
-                                                        '<div class="span6">'+
-                                                            '<p class="precio"><input style="width:100%;font-size:10px;" id="cant'+idx+'" class="cValor" value="'+result[idx].cantidad+'" type="text" readonly></p>'+
-                                                        '</div>'+
-                                                    '</div>'+
-                                                '</div>'+
-                                                '<div class="imagen-galeria span3">'+
-                                                    '<span class="precio"><input style="width:100%;font-size:10px;" id="precio'+idx+'" class="cValor" value="'+result[idx].precio * app.productosService.viewModel.cambio+'" type="text" readonly></span>'+
-                                                '</div>'+
-                                            '</div>'+
-                                        '</div>'+
-                                    '');
-                                    var cleave = new Cleave('#precio'+idx+'', {
-                                        prefix: app.productosService.viewModel.moneda+' $',
-                                        numeral: true,
-                                        numeralThousandsGroupStyle: 'thousand',
-                                        rawValueTrimPrefix: true
-                                    });
-                                })
+                                //     $('#productos_b').append(''+
+                                //         '<div class="mtb">'+
+                                //             '<div class="row-fluid cont_proc">'+
+                                //                 '<div class="imagen-galeria span3">'+
+                                //                     '<img src="'+app.server+''+respuesta.imagen+'">'+
+                                //                 '</div>'+
+                                //                 '<div class="span9">'+
+                                //                     '<div class="row-fluid">'+
+                                //                         '<div class="span6">'+
+                                //                             '<p>Cantidad</p>'+
+                                //                         '</div>'+
+                                //                         '<div class="span6">'+
+                                //                             '<p class="precio"><input style="width:100%;font-size:10px;" id="cant'+idx+'" class="cValor" value="'+result[idx].cantidad+'" type="text" readonly></p>'+
+                                //                         '</div>'+
+                                //                     '</div>'+
+                                //                 '</div>'+
+                                //                 '<div class="imagen-galeria span3">'+
+                                //                     '<span class="precio"><input style="width:100%;font-size:10px;" id="precio'+idx+'" class="cValor" value="'+result[idx].precio * app.productosService.viewModel.cambio+'" type="text" readonly></span>'+
+                                //                 '</div>'+
+                                //             '</div>'+
+                                //         '</div>'+
+                                //     '');
+                                //     var cleave = new Cleave('#precio'+idx+'', {
+                                //         prefix: app.productosService.viewModel.moneda+' $',
+                                //         numeral: true,
+                                //         numeralThousandsGroupStyle: 'thousand',
+                                //         rawValueTrimPrefix: true
+                                //     });
+                                // })
 
                             
                                 // var pesoTotal = $('#envio').val();
@@ -230,43 +230,52 @@
             });
         },
         verTC: function(){
+            console.log('<!-- View Ver TC -->')
           $('#boton-borrar-tc').data("kendoMobileButton").enable(false);
-          var tokens = {};
-          tokens.usuario = window.localStorage.getItem('idUsuario');
-          tokens.test = app.pruebas;
+          
+          var usuario = window.localStorage.getItem('idUsuario');
+          var test = app.pruebas;
           Pace.track(function(){
             $.ajax({
-              method: "GET",
-              url: app.servidor+"consultar_tcs",
-              data: tokens,
-              dataType: 'json'
-              })
-              .done(function( tcs ) {
-                console.log(tcs);
-                if(tcs.error === false){
-                    $('#contSelectTC').html('<select id="select-ver-tc"></select>');
-                    $.each(tcs.tcs,function(itc,vtc){
-                        var tipo = vtc.creditCardTokenList[0].paymentMethod;
-                        $('#select-ver-tc').append('<option value="'+vtc.creditCardTokenList[0].creditCardTokenId+'" data-imagesrc="images/credit-cards/'+tipo+'.PNG" data-description="'+vtc.creditCardTokenList[0].maskedNumber+'">'+tipo+'</option>');
-                    });
+                    method: "GET",
+                    dataType: 'json',
+                    url: app.servidor+"consultar_tcs",
+                    data: {
+                        usuario:usuario,
+                        test:test
+                    }
+              }).done(function( tcs ) {
+                    console.log('entro done ver tc');
+                    console.log(tcs);
+                    if(tcs.error === false){
+                        $('#contSelectTC').html('<select id="select-ver-tc"></select>');
+                        $.each(tcs.tcs,function(itc,vtc){
+                            console.log('entro echa');
+                            console.log(vtc);
+                            console.log(itc);
+                            var tipo = vtc.creditCardTokenList[0].paymentMethod;
+                            $('#select-ver-tc').append('<option value="'+vtc.creditCardTokenList[0].creditCardTokenId+'" data-imagesrc="images/credit-cards/'+tipo+'.PNG" data-description="'+vtc.creditCardTokenList[0].maskedNumber+'">'+tipo+'</option>');
+                        });
 
-                    var ancho = $(window).width();
-                    $('#select-ver-tc').ddslick({
-                        width:ancho,
-                        onSelected: function(tc){
-                            console.log(tc);
-                        }   
-                    });
-                    $('#boton-borrar-tc').data("kendoMobileButton").enable(true);
-                }else{
-                    app.mostrarMensaje(tcs.message,'error');
-                }
+                        var ancho = $(window).width();
+                        $('#select-ver-tc').ddslick({
+                            width:ancho,
+                            onSelected: function(tc){
+                                console.log(tc);
+                            }   
+                        });
+                        $('#boton-borrar-tc').data("kendoMobileButton").enable(true);
+                    }else{
+                        console.log('entro erro ver tc')
+                        app.mostrarMensaje(tcs.message,'error');
+                    }
                 
               });
           });
         },
         procesoCompra : 0,
         mostrarAgregarTC: function(e){
+            console.log('<!-- View Agregar TC -->');
             var compra = e.view.params.compra;
             app.checkoutService.viewModel.procesoCompra = parseInt(compra);
             console.log('Proceso de compra: '+app.checkoutService.viewModel.procesoCompra);
@@ -285,100 +294,97 @@
             });
         },
         agregarTC:function(){
+
+            var nombreTC = $('#nombreTC').val();
+            var payerId = window.localStorage.getItem('idUsuario');
+            var cedula = $('#cedula').val();
+            var tarjeta = $('#numeroTC').val();
+            var numTarjeta = tarjeta.replace(/ /g,"");
             var Exp = jQuery('#expTC').val();
             values=Exp.split('/');
             var mesExp = values[0];
             var anioExp = values[1];
-
-           
+            var fechaExp = anioExp+'/'+mesExp;
             var franquicia = payU.cardPaymentMethod($('#numeroTC').val());
-            console.log(app.pruebas);
-            var datosTC = {
-                number:$('#numeroTC').val().replace(/\s/g, ''),
-                name_card:$('#nombreTC').val(),
-                payer_id:window.localStorage.getItem('idUsuario'), 
-                exp_month:parseInt(mesExp),
-                exp_year:parseInt(anioExp),
-                method:franquicia,
-             }
-            console.log(datosTC);
-            console.log(app.pruebas);
-            if(app.pruebas){ 
-                console.log('entro pruebas');
-                payU.setURL('http://sandbox.api.payulatam.com/payments-api/4.0/service');
-                //payU.setPublicKey("6u39nqhq8ftd0hlvnjfs66eh8c"); /* Test */
-                payU.setPublicKey("PKaC6H4cEDJD919n705L544kSU");
-                payU.setAccountID("512321");
-                payU.setListBoxID('mylistID');
-                payU.getPaymentMethods();
-            }else{
-                console.log('entro real');
-                payU.setURL('https://api.payulatam.com/payments-api/4.0/service'); /* Producción */
-                payU.setPublicKey("PKaoH5W14pdw66s70X50hSx0Rt"); /* Sushitoc */
-                payU.setAccountID("89375"); //3 brasil // 9 argentina // 1 colombia /* Kheiron */
-                payU.setListBoxID('TU LIST BOX ID', 'texto opcional');
-                payU.getPaymentMethods();
-                //No tienes tarjeta crédito como medio de pago activo para tokenizar (Verifica que estás utilizando 
-                payU.setLanguage("es");// optional
-            }
-            
-            payU.setCardDetails(
-              datosTC
-            );
-            console.log(datosTC);
-            // payU.getPaymentMethods();
-            payU.createToken(responseHandler);        
-            
-            function responseHandler(response){
-                console.log('responseHandler'+ JSON.stringify(response));
-              if (response.error) {
-                // Se muestra los mensajes de error.
-                app.mostrarMensaje(response.error,'error');
-              }
-              else {
-                // Se obtiene el token y se puede guardar o enviarlo para algún pago.
-                var token = response.token;
-                var payer_id = response.payer_id;
-                var document = response.document;
-                var name = response.name;
-                console.log('Tarjeta encriptada con Token: '+token);
-                window.localStorage.setItem('token',token);
-                var datosToken ={};
-                datosToken.usuario = window.localStorage.getItem('idUsuario');
-                datosToken.token =token;
-                datosToken.test = app.pruebas;
-                Pace.track(function(){
-                    $.ajax({
-                      method: "GET",
-                      url: app.servidor+"agregar_token_payu",
-                      data: datosToken,
-                      dataType: 'json'
-                    })
-                    .done(function( tokenIngreso ) {
-                        console.log(tokenIngreso); 
-                        if(!tokenIngreso.error){
-                            app.mostrarMensaje(tokenIngreso.message,'success');
-                            $('#numeroTC').val('');
-                            $('#nombreTC').val('');
-                            $('#expTC').val('');
-                            if(app.citasServicio.modelo.procesoCompra === 1){
-                                app.application.navigate('view-pago','fade');
-                            }else{
-                                app.application.navigate('view-ver-tc','fade');    
-                            }
-                            
-                        }else{
-                            app.mostrarMensaje(tokenIngreso.message,'error');
-                        }
-                    });
+
+            if (nombreTC && cedula && numTarjeta && Exp) {
+
+                $.ajax({
+                  method: "GET",          
+                  url: app.servidor+"agregarTarjeta",
+                  dataType: 'json',
+                  data: {
+                      nombreTC:nombreTC,
+                      payerId:payerId,
+                      cedula:cedula,
+                      numTarjeta: numTarjeta,
+                      fechaExp:fechaExp,
+                      franquicia:franquicia
+                  }
+                })
+                .done(function( result ) {
+                    console.log('result')
+                    console.log(result)
+                    if (result.error == false) {
+                        app.mostrarMensaje(result.message, 'success');
+                        $('#numeroTC').val('');
+                        $('#nombreTC').val('');
+                        $('#expTC').val('');
+                        $('#cedula').val('');
+                    }else{
+                        app.mostrarMensaje(result.message, 'error');
+                    }
                 });
-            
-                    //modelo.pagoExitoso();
-                    
-                    
-              }
-            }
+
+            }else{
+                app.mostrarMensaje('Completa todos los datos','error')
+            }   
         },
+        borrarTC: function(){
+            var modelo = this;
+            var ddTC = $('#select-ver-tc').data('ddslick');
+            console.log(ddTC);
+            var tokenTC = ddTC.selectedData.value;
+            var description = ddTC.selectedData.description;
+            var datosBorrar = {}
+            datosBorrar.usuario = window.localStorage.getItem('idUsuario');
+            datosBorrar.token = tokenTC;
+            console.log('Token a borrar:');
+            console.log(datosBorrar.usuario);
+            console.log(datosBorrar.token);
+            
+            navigator.notification.confirm(
+                '¿Realmente deseas eliminar tu tarjeta '+description+'?', // message
+                function(boton){
+                    if(boton === 1){
+                        console.log(datosBorrar);
+                        Pace.track(function(){
+                            $.ajax({
+                                method:'GET',
+                                url: app.servidor+'eliminar_tc',
+                                data:datosBorrar,
+                                dataType: 'json'
+                            })
+                            .done(function( respuestaEliminar ) {
+                                console.log(respuestaEliminar);
+                                if(respuestaEliminar.error === false){
+                                    app.mostrarMensaje(respuestaEliminar.message,'success');
+                                    modelo.verTC();
+                                }else{
+                                    app.mostrarMensaje(respuestaEliminar.message,'error');
+                                }
+                                
+                            })
+                            .error(function(error){
+                                console.log(JSON.stringify(error));
+                            });
+                        });
+                    }
+                },            // callback to invoke with index of button pressed
+                'Eliminar tarjeta de crédito',           // title
+                ['Borrar','Cancelar']         // buttonLabels
+            );
+        },        
         enviarSolicitud:function(){
              var prueba = true;
             if(prueba){

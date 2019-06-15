@@ -438,7 +438,8 @@
         
         <div id="formProductos" class="registroForm">
             <h3>Detalles de facturación</h3>
-            <form id="formRegistroCheck" data-bind="events: { submit: enviarSolicitud }">
+            <!-- <form id="formRegistroCheck" data-bind="events: { submit: enviarPago }"> -->
+            <form id="formRegistroCheck">
                <p><input class="inputRegistro" id="inputNombreProducto" type="text" placeholder="Nombre"></p>
                <p><input class="inputRegistro" id="inputApellido" type="text" placeholder="Apellido"></p>
                <p><input class="inputRegistro" type="number" name="fecha" placeholder="C.C" id="inputCedula"></p>
@@ -446,8 +447,10 @@
                <p><input class="inputRegistro" id="inputDireccion" type="text" placeholder="Dirección"></p>
                <p><input class="inputRegistro" id="inputTelefonoProducto" type="number" placeholder="Teléfono"></p>
                <p><input class="inputRegistro" id="inputDireccionEnvio" type="text" placeholder="Dirección de envío (Apt, Ofc, etc)"></p>
-               <p><input class="inputRegistro" id="inputPaisCheck" type="text" placeholder="País"></p>
                <p><input class="inputRegistro" id="inputCiudadCheck" type="text" placeholder="Ciudad"></p>
+               <p><input class="inputRegistro" id="inputDepartamentoCheck" type="text" placeholder="Departamento"></p>
+               <p><input class="inputRegistro" id="inputPaisCheck" type="text" placeholder="País"></p>
+               <p><div id="contSelectTC2"></div></p>
 <!--                 <h3>Resumen de tus productos</h3>
                <div id="productos_b">
                     
@@ -495,7 +498,7 @@
                     <div class="row-fluid">
                         <div class="span12">
                             <p class="btn_rc" align="center">
-                                <button type="submit" class="readmore">Finalizar compra</button>
+                                <button type="submit" id="formPago" class="readmore">Finalizar compra</button>
                             </p>
                         </div>
                     </div>

@@ -386,6 +386,13 @@ input {height: 4.5em !important; font-size:17px;}
 
 .badge_twitter::after {position: absolute;content: '';width: 30px;height: 30px;background: #ff0000;border-radius: 50px;right: 0;z-index: -2;}
 
+/*TC procesar*/
+#contSelectTC2 .dd-container, .dd-select, .dd-options{
+	width: 83% !important; 
+	position: sticky !important;
+	margin: auto !important;
+}
+
 @media(min-width:768px){
     
     input{height:5em !important;}

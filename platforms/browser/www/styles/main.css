@@ -248,7 +248,7 @@ input {height: 4.5em !important; font-size:17px;}
 #view-checkout #envio {background: #003366;color: #fff;    width: 75% !important; border: none;}
 #view-checkout #granTotal {background: #003366;color: #fff;    width: 75% !important;  border: none;}
 #view-checkout #cupon {height: 2em !important;margin-top: 9px;font-size: 14px;}
-#view-checkout input {font-size:14px;height:3em !important;text-indent:0.5em;background: #faf9fe;border:none;color:#000000;width:75%;padding:1em;border:1px solid #dbe2f7;    -webkit-appearance: none;    appearance: none;}
+#view-checkout input, select {font-size:14px;height:3em !important;text-indent:0.5em;background: #faf9fe;border:none;color:#000000;width:75%;padding:1em;border:1px solid #dbe2f7;    -webkit-appearance: none;    appearance: none;}
 #view-checkout button {background: #1b3664;border:none;color:#FFFFFF;width:75%;padding:1em;font-size:17px;}
 #view-checkout .span12{width: 100%;}
 #view-checkout .span10{width: 90%;}

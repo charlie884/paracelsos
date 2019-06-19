@@ -8,7 +8,14 @@
         costoEnvio:0,
         moneda:null,
         cambio:0,
+        typeCard:'',
+        numberCard:"",
+        ip:'',
         carrito:function(){
+            $.getJSON("https://api.ipify.org/?format=json",function(data){
+                console.log( "Your ip: " + data.ip);
+                app.checkoutService.viewModel.ip = data.ip;
+            });
             $('#productos_b').html('');
             var llave = window.localStorage.getItem('llave_payu');   
             $.ajax({
@@ -132,6 +139,16 @@
                                         console.log('entro done ver tc');
                                         console.log(tcs);
                                         if(tcs.error === false){
+                                            $('#contCuotas').html('<select id="cuotas" style="width:69%;"></select>');
+
+                                            var cuotas = 25;
+                                            for (var i = 0; i < cuotas; i++) {
+                                                // console.log(i);
+                                                if (i != 0) {                                                    
+                                                    $('#cuotas').append('<option style="width:69%;" value="'+i+'">'+i+'</option>');
+                                                }
+
+                                            }
                                             $('#contSelectTC2').html('<select id="select-ver-tc"></select>');
                                             $.each(tcs.tcs,function(itc,vtc){
                                                 console.log('entro echa2');
@@ -145,10 +162,13 @@
                                             $('#select-ver-tc').ddslick({
                                                 width:ancho,
                                                 onSelected: function(tc){
+                                                    console.log('seleccionando')
                                                     console.log(tc);
+                                                    console.log(tc.selectedData);
+                                                    app.checkoutService.viewModel.typeCard = tc.selectedData.text; 
+                                                    app.checkoutService.viewModel.numberCard = tc.selectedData.value; 
                                                 }   
                                             });
-                                            // $('#boton-borrar-tc').data("kendoMobileButton").enable(true);
                                         }else{
                                             console.log('entro erro ver tc')
                                             app.mostrarMensaje(tcs.message,'error');
@@ -159,7 +179,7 @@
                         }
                     })
                 })                    
-            }) 
+            })
 
             $('#formPago').click(function(){
 
@@ -185,21 +205,13 @@
                 var departamento = $('#inputDepartamentoCheck').val();
                 var pais = $('#inputPaisCheck').val();
 
-                console.log(nombres);
-                console.log(apellido);
-                console.log(cedula);
-                console.log(correo);
-                console.log(direccion);
-                console.log(direccionEnvio);
-                console.log(telefono);
-                console.log(ciudad);
-                console.log(departamento);
-                console.log(pais);
-                console.log(total_compra);
-                console.log(referenceCode);
-
-                // var total_compra = cleave.getRawValue();
-                // var llave_payu = window.localStorage.getItem('llave_payu');
+                // credit card
+                var typeCard = app.checkoutService.viewModel.typeCard;
+                var numberToken = app.checkoutService.viewModel.numberCard;
+                var cuotas = $('#cuotas').val();
+                var total_compra = cleave.getRawValue();
+                var llave_payu = window.localStorage.getItem('llave_payu');
+                var ip = app.checkoutService.viewModel.ip;
 
                 var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
                 if(!nombres){
@@ -254,12 +266,30 @@
                     )
                 } else {
                     console.log('Formulario completado correctamente');
+
+                    console.log(nombreCompleto);
+                    console.log(cedula);
+                    console.log(correo);
+                    console.log(direccion);
+                    console.log(direccionEnvio);
+                    console.log(telefono);
+                    console.log(ciudad);
+                    console.log(departamento);
+                    console.log(pais);
+                    console.log(total_compra);
+                    console.log(referenceCode);
+
+                    console.log(typeCard);
+                    console.log(numberToken);
+                    console.log(cuotas);
+                    console.log(ip);
+
                      $.ajax( {
                         type: "POST",
                         url: app.servidor+'guardar_solicitud_app',         
                         dataType: "json",
                         data: {
-                            nombres: nombres,
+                            nombres: nombreCompleto,
                             apellido: apellido,
                             cedula: cedula,
                             correo: correo,
@@ -270,7 +300,11 @@
                             departamento: departamento,
                             pais: pais,
                             llave: referenceCode,
-                            value:total_compra
+                            value:total_compra,
+                            typeCard:typeCard,
+                            numberToken:numberToken,
+                            cuotas:cuotas,
+                            ip:ip
                         },            
                     })    
                     .done(function(resultado){
@@ -425,6 +459,7 @@
             var anioExp = values[1];
             var fechaExp = anioExp+'/'+mesExp;
             var franquicia = payU.cardPaymentMethod($('#numeroTC').val());
+            var test = app.pruebas;
 
             if (nombreTC && cedula && numTarjeta && Exp) {
 
@@ -438,7 +473,8 @@
                       cedula:cedula,
                       numTarjeta: numTarjeta,
                       fechaExp:fechaExp,
-                      franquicia:franquicia
+                      franquicia:franquicia,
+                      test:test
                   }
                 })
                 .done(function( result ) {
@@ -450,6 +486,7 @@
                         $('#nombreTC').val('');
                         $('#expTC').val('');
                         $('#cedula').val('');
+                        navigate("#view-ver-tc");
                     }else{
                         app.mostrarMensaje(result.message, 'error');
                     }
@@ -488,7 +525,8 @@
                                 console.log(respuestaEliminar);
                                 if(respuestaEliminar.error === false){
                                     app.mostrarMensaje(respuestaEliminar.message,'success');
-                                    modelo.verTC();
+                                    // modelo.verTC();
+                                    location.reload();
                                 }else{
                                     app.mostrarMensaje(respuestaEliminar.message,'error');
                                 }
@@ -503,125 +541,7 @@
                 'Eliminar tarjeta de crédito',           // title
                 ['Borrar','Cancelar']         // buttonLabels
             );
-        },        
-        enviarPago:function(){
-            console.log('clicked submit'); // --> works
-
-            var referenceCode = window.localStorage.getItem('llave_payu');
-            var total_compra = $('#totalCh').val();
-            var nombres = $('#inputNombreProducto').val();
-            var apellido = $('#inputApellido').val();
-            var nombreCompleto = nombres+' '+apellido;
-            var correo = $('#inputCorreoProducto').val();
-            var telefono = $('#inputTelefonoProducto').val();
-            var cedula = jQuery('#inputCedula').val();
-            var direccion = $('#inputDireccion').val();
-            var direccionEnvio = $('#inputDireccionEnvio').val();
-            var ciudad = $('#inputCiudadCheck').val();
-            var departamento = $('#inputDepartamentoCheck').val();
-            var pais = $('#inputPaisCheck').val();
-
-            console.log(nombres);
-            console.log(apellido);
-            console.log(cedula);
-            console.log(correo);
-            console.log(direccion);
-            console.log(direccionEnvio);
-            console.log(telefono);
-            console.log(ciudad);
-            console.log(departamento);
-            console.log(pais);
-            console.log(total_compra);
-            console.log(referenceCode);
-
-            // var total_compra = cleave.getRawValue();
-            // var llave_payu = window.localStorage.getItem('llave_payu');
-            var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-            if(!nombres){
-                app.mostrarMensaje(
-                  'Escribe tu nombre',
-                  'error'
-                )
-            } else if(!apellido){
-                app.mostrarMensaje(
-                  'Escribe tu apellido',
-                  'error'
-                )
-            } else if(!cedula){
-                app.mostrarMensaje(
-                  'Escribe tu cedula',
-                  'error'
-                )
-            } else if(correo.length <= 0 || !expr.test(correo)){
-                app.mostrarMensaje(
-                  'Escribe un correo válido',
-                  'error'
-                )
-            } else if(!direccion){
-                app.mostrarMensaje(
-                  'Escribe tu direcicon',
-                  'error'
-                )
-            } else if(!telefono){
-                app.mostrarMensaje(
-                  'Escribe tu teléfono',
-                  'error'
-                )
-            } else if(!direccionEnvio){
-                app.mostrarMensaje(
-                  'Escribe tu direccion de envío',
-                  'error'
-                )
-            } else if(!ciudad){
-                app.mostrarMensaje(
-                  'Escribe tu ciudad',
-                  'error'
-                )
-            } else if(!departamento){
-                app.mostrarMensaje(
-                  'Escribe tu departamento',
-                  'error'
-                )
-            } else if(!pais){
-                app.mostrarMensaje(
-                  'Escribe tu país',
-                  'error'
-                )
-            } else {
-                console.log('Formulario completado correctamente');
-                //  $.ajax( {
-                //     type: "POST",
-                //     url: app.servidor+'guardar_solicitud_app',         
-                //     dataType: "json",
-                //     data: {
-                //         nombres: nombres,
-                //         apellido: apellido,
-                //         cedula: cedula,
-                //         correo: correo,
-                //         direccion: direccion,
-                //         telefono: telefono,
-                //         direccion_envio: direccionEnvio,
-                //         ciudad: ciudad,
-                //         departamento: departamento,
-                //         pais: pais,
-                //         llave: referenceCode,
-                //         value:total_compra
-                //     },            
-                // })    
-                // .done(function(resultado){
-                //     if(resultado.status === 1){
-                //         console.log('redireccion');
-                //     } else {
-                //         app.mostrarMensaje(
-                //            resultado.message,
-                //           'error'
-                //         )
-                //     }
-                // }); 
-
-            }
-
-        }
+        }     
         
     });
 

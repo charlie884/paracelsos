@@ -439,7 +439,7 @@
         <div id="formProductos" class="registroForm">
             <h3>Detalles de facturación</h3>
             <!-- <form id="formRegistroCheck" data-bind="events: { submit: enviarPago }"> -->
-            <form id="formRegistroCheck">
+            <div id="formRegistroCheck">
                <p><input class="inputRegistro" id="inputNombreProducto" type="text" placeholder="Nombre"></p>
                <p><input class="inputRegistro" id="inputApellido" type="text" placeholder="Apellido"></p>
                <p><input class="inputRegistro" type="number" name="fecha" placeholder="C.C" id="inputCedula"></p>
@@ -450,11 +450,10 @@
                <p><input class="inputRegistro" id="inputCiudadCheck" type="text" placeholder="Ciudad"></p>
                <p><input class="inputRegistro" id="inputDepartamentoCheck" type="text" placeholder="Departamento"></p>
                <p><input class="inputRegistro" id="inputPaisCheck" type="text" placeholder="País"></p>
+               <p style="text-align: left;margin-left: 4em;">Sleccione tarjeta de crédito</p>
                <p><div id="contSelectTC2"></div></p>
-<!--                 <h3>Resumen de tus productos</h3>
-               <div id="productos_b">
-                    
-               </div> -->
+               <p style="text-align: left;margin-left: 4em;">Cuotas</p>
+               <p><div id="contCuotas"></div></p>
                 <div align="center" class="span12 pt">
                     <div class="row-fluid">
                         <div class="span6">
@@ -498,12 +497,12 @@
                     <div class="row-fluid">
                         <div class="span12">
                             <p class="btn_rc" align="center">
-                                <button type="submit" id="formPago" class="readmore">Finalizar compra</button>
+                                <button id="formPago" class="readmore">Finalizar compra</button>
                             </p>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div> 
 

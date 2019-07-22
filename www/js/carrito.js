@@ -17,20 +17,6 @@
                 $('.km-scroll-container').css('height','100%');
                 // $('.total').html('');
                 console.log('entro carrito');
-                $.ajax({
-                    url: app.servidor+'obtener_cantidad_productos_app',
-                    dataType: 'json',
-                    data:{llave:window.localStorage.getItem('llave_payu')}
-                }).
-                done(function(badage){
-                    console.log('badage; '+badage)
-                    if (badage > 0) {
-                        $('#carrito').addClass('badge_twitter');                    
-                        $('#carrito').text(badage);                    
-                    }else{
-                        console.log('no hay productos en carrito')
-                    }
-                })
                 if (window.localStorage.getItem('llave_payu')) {
                     Pace.track(function(){
                         var llave = window.localStorage.getItem('llave_payu');
@@ -71,6 +57,7 @@
                                     console.log('entro each btn '+result.length);
 
                                     if (result.length >= 1) {
+                                        $('#carrito').addClass('badge');
 
                                         $('.cont_btnCar').show('');
 
@@ -84,7 +71,7 @@
                                         }
                                         if (result.length >3) {
                                             $('#view-carrito .pt').css('position','relative');
-                                        }
+                                        }                                         
 
                                     }else{
 

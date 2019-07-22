@@ -95,6 +95,30 @@
                         '');
                     });
                 })
+
+                var llave = window.localStorage.getItem('llave_payu');
+                console.log('llave: '+llave);
+                if (llave) {
+                    $.ajax({
+                        method:'POST',
+                        url: app.servidor+'obtener_cantidad_productos_app',
+                        dataType: 'json',
+                        data:{llave:llave}
+                    }).
+                    done(function(res){
+
+                        if (res.cantidad > 0) {
+                            console.log('poniendo badage')
+                            $('#carrito').addClass('badge');
+                            $('#carritoAtras').addClass('badge');
+
+                        }else{
+                            console.log('no hay productos en carrito')
+                            $('#carrito').removeClass('badge');  
+                            $('#carritoAtras').removeClass('badge');
+                        }
+                    })                                    
+                }
             });
     	},
         // badage:function(){

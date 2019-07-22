@@ -90,7 +90,7 @@
                     <img src="images/ico_productos.png" alt="" class="ico">
                     <img src="images/ico_productos_a.png" alt="" class="hover"> Catálogo                    
                 </a>
-                <a class="border" href="#view-carrito" data-icon="contacts" id="Carrito">
+                <a class="border" href="#view-carrito" data-icon="contacts" id="carritoAtras">
                     <img src="images/ico_shop_off.png" alt="" class="ico">
                     <img src="images/ico_shop_on.png" alt="" class="hover"> Carrito                    
                 </a>
@@ -129,7 +129,7 @@
                     <img src="images/ico_productos.png" alt="" class="ico">
                     <img src="images/ico_productos_a.png" alt="" class="hover"> Catálogo                    
                 </a>
-                <a class="border" href="#view-carrito" data-icon="contacts" id="Carrito">
+                <a class="border" href="#view-carrito" data-icon="contacts" id="carrito">
                     <img src="images/ico_shop_off.png" alt="" class="ico">
                     <img src="images/ico_shop_on.png" alt="" class="hover"> Carrito                    
                 </a>
@@ -185,7 +185,8 @@
         data-layout="main"
         data-role="view"
         data-title="Paracelsos"
-        data-model="app.bienvenidaService.viewModel" data-show="app.bienvenidaService.viewModel.mostrar">
+        data-model="app.bienvenidaService.viewModel" 
+        data-show="app.bienvenidaService.viewModel.mostrar">
         <div class="swiper-home">
             <div class="swiper-wrapper" id="sliderHome">
             </div>
@@ -431,7 +432,7 @@
     <!-- View checkout -->
     <div data-role="view"
         id="view-checkout"
-        data-layout="main"
+        data-layout="layout-atras-footer"
         data-title="Facturación"
         data-model="app.checkoutService.viewModel"
         data-show="app.checkoutService.viewModel.carrito">

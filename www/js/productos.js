@@ -16,6 +16,24 @@
             $('.plusProduct').html('');
             $('#cantidad').val(0);
             console.log('<!-- View Productos -->');
+            $.ajax({
+                method:'POST',
+                url: app.servidor+'obtener_cantidad_productos_app',
+                dataType: 'json',
+                data:{llave:window.localStorage.getItem('llave_payu')}
+            }).
+            done(function(res){
+
+                if (res.cantidad > 0) {
+                    console.log('poniendo badage')
+                    $('#carrito').addClass('badge');
+                    $('#carritoAtras').addClass('badge');
+                }else{
+                    console.log('no hay productos en carrito')
+                    $('#carrito').removeClass('badge');  
+                    $('#carritoAtras').addClass('badge');
+                }
+            })
             Pace.track(function(){
                 $.ajax({
                     method: 'GET',
@@ -309,10 +327,28 @@
                         );                  
                     }else{
                         if(resultado.status == 'added'){
-                            app.mostrarMensaje(
-                               'Ha sido agregado de forma exitosa un producto ',
-                              'success'
-                            );
+                            $.ajax({
+                                method:'POST',
+                                url: app.servidor+'obtener_cantidad_productos_app',
+                                dataType: 'json',
+                                data:{llave:window.localStorage.getItem('llave_payu')}
+                            }).
+                            done(function(res){
+
+                                if (res.cantidad > 0) {
+                                    console.log('poniendo badage')
+                                    $('#carrito').addClass('badge');
+                                    $('#carritoAtras').addClass('badge');
+                                    app.mostrarMensaje(
+                                       'Ha sido agregado de forma exitosa un producto ',
+                                      'success'
+                                    );
+                                }else{
+                                    console.log('no hay productos en carrito')
+                                    $('#carrito').removeClass('badge');  
+                                    $('#carritoAtras').addClass('badge');
+                                }
+                            })  
                             // setTimeout(function(){ location.assign('<?= JURI::base() ?>carrito'); }, 1000);
                         }else if( resultado.status == 'error'){
                             app.mostrarMensaje(
@@ -328,20 +364,21 @@
 
                     }
                 });
-                $.ajax({
-                    url: app.servidor+'obtener_cantidad_productos_app',
-                    dataType: 'json',
-                    data:{llave:window.localStorage.getItem('llave_payu')}
-                }).
-                done(function(badage){
-                    console.log('badage; '+badage)
-                    if (badage > 0) {
-                        $('#carrito').addClass('badge_twitter');                    
-                        $('#carrito').text(badage);                    
-                    }else{
-                        console.log('no hay productos en carrito')
-                    }
-                })
+                // $.ajax({
+                //     method:'POST',
+                //     url: app.servidor+'obtener_cantidad_productos_app',
+                //     dataType: 'json',
+                //     data:{llave:window.localStorage.getItem('llave_payu')}
+                // }).
+                // done(function(badage){
+                //     console.log('badage; '+badage)
+                //     if (badage > 0) {
+                //         $('#carrito').addClass('badge_twitter');                    
+                //         $('#carrito').text(badage);                    
+                //     }else{
+                //         console.log('no hay productos en carrito')
+                //     }
+                // })
 
             }
         }, 

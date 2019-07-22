@@ -308,14 +308,22 @@
                         },            
                     })    
                     .done(function(resultado){
-                        if(resultado.status === 1){
-                            console.log('redireccion');
-                        } else {
-                            app.mostrarMensaje(
-                               resultado.message,
-                              'error'
-                            )
+                        console.log('resultado transaccion');
+                        if (resultado.transactionResponse.state == "SUCCESS") {
+                            console.log('entro succes')
+                            console.log(resultado.transactionResponse.state);
+                        }else{
+                            console.log('no entro succes')
+                            console.log(resultado.transactionResponse.state);                            
                         }
+                        // if(resultado.status === 1){
+                        //     console.log('redireccion');
+                        // } else {
+                        //     app.mostrarMensaje(
+                        //        resultado.message,
+                        //       'error'
+                        //     )
+                        // }
                     }); 
 
                 }
